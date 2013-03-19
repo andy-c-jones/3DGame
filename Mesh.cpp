@@ -1,13 +1,15 @@
 #include "Mesh.h"
 
-Mesh::Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFileName)
+Mesh::Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFileName,std::string textureFileName)
 {
 	_pd3dDevice = device;
 	D3DXMatrixIdentity(&_worldMatrix);
 	D3DXMatrixTranslation(&_worldMatrix, position.x, position.y, position.z);
 	_meshFileName = meshFileName;
+	_textureFileName = textureFileName;
 	_pMesh = NULL;
 	_matBuffer = NULL;
+	_texture = NULL;
 }
 
 Mesh::~Mesh()
@@ -34,6 +36,16 @@ bool Mesh::Load()
 			return false;
 		}
 	}
+
+	if ( FAILED( D3DXCreateTextureFromFile( _pd3dDevice, _textureFileName.c_str(), &_texture ) ) )
+	{
+		if ( FAILED( D3DXCreateTextureFromFile( _pd3dDevice, _textureFileName.c_str(), &_texture ) ) )
+		{
+			return false;
+		} 
+
+	} 
+
 	return true;
 }
 

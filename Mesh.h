@@ -6,15 +6,17 @@
 class Mesh
 {
 	IDirect3DDevice9* _pd3dDevice;
+	IDirect3DTexture9* _texture;
 	D3DXMATRIXA16 _worldMatrix;
 	DWORD _numMaterials;
 	std::string _meshFileName;
+	std::string _textureFileName;
 	ID3DXBuffer* _matBuffer;
 
 public:
 	ID3DXMesh* _pMesh;
 
-	Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFileName);
+	Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFileName,std::string textureFileName);
 	~Mesh();
 
 	D3DXMATRIXA16* GetWorldMat();

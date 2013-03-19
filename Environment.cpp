@@ -118,33 +118,33 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR4 lightPos = D3DXVECTOR4(0.0f, 20.0f, 0.0f, 1.0f);
 	D3DXVECTOR4 lightPos2 = D3DXVECTOR4(50.0f, 20.0f, 100.0f, 1.0f);
 	D3DXVECTOR4 lightPos3 = D3DXVECTOR4(-100.0f, 20.0f, 0.0f, 1.0f);
-	_pTeapot = new Mesh(_pd3dDevice, teapotPos, "teapot.x");
+	_pTeapot = new Mesh(_pd3dDevice, teapotPos, "teapot.x","stone.dds");
 	if( !(_pTeapot->Load()) )
 	{
 		MessageBoxA(NULL, "loading teapot mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
-	_pSphere = new Mesh(_pd3dDevice, spherePos, "sphere.x");
+	_pSphere = new Mesh(_pd3dDevice, spherePos, "sphere.x","stone.dds");
 	if( !(_pSphere->Load()) )
 	{
 		MessageBoxA(NULL, "loading sphere mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
-	_pCeiling = new Mesh(_pd3dDevice, ceilingPos, "roof.x");
+	_pCeiling = new Mesh(_pd3dDevice, ceilingPos, "roof.x","stone.dds");
 	if( !(_pCeiling->Load()) )
 	{
 		MessageBoxA(NULL, "loading ceiling mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
 
-	_pGround = new Mesh(_pd3dDevice, groundPos, "plane.x");
+	_pGround = new Mesh(_pd3dDevice, groundPos, "plane.x","stone.dds");
 	if( !(_pGround->Load()) )
 	{
 		MessageBoxA(NULL, "loading ground mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
 
-	_pWall = new Mesh(_pd3dDevice, wallPos, "Wall1.x");
+	_pWall = new Mesh(_pd3dDevice, wallPos, "Wall1.x","stone.dds");
 	if( !(_pWall->Load()) )
 	{
 		MessageBoxA(NULL, "loading ground mesh failed.", "BOOM!", MB_OK);
