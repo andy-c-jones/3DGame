@@ -2,7 +2,8 @@ float4x4 worldMat;
 float4x4 worldViewProjMat;
 textureCUBE cubeShadowMap; 
 textureCUBE cubeShadowMap2; 
-textureCUBE cubeShadowMap3; 
+textureCUBE cubeShadowMap3;
+texture2D	shaderTexture; 
 
 const float4 materialAmbient = float4(0.9f, 0.9f, 0.9f, 1.0f);  
 const float4 materialDiffuse = float4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -22,6 +23,13 @@ float4 shadowLightPosition;
 float4 eyePosition;
 
 #define zOffset 0.5f 
+
+SamplerState SampleTypeWrap
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 
 samplerCUBE cubeShadowMapSampler = sampler_state
 {
@@ -160,6 +168,7 @@ float4 depthMap_PS( VS_OUTPUT_DEPTH In ) : COLOR0
 float4 cubicShadowMapping_PS(VS_OUTPUT In) : COLOR0
 {
     lightFuncOutput lightResult;
+	float4 textureColor;
     
     float3 normal = normalize(In.normalW);
     float3 cam2Vert = normalize(In.cam2Vert);
@@ -183,7 +192,11 @@ float4 cubicShadowMapping_PS(VS_OUTPUT In) : COLOR0
 		specular += tempSpecular / NUMBER_OF_LIGHTS;
 	}
 
-    float4 lightingColour = (ambient * (diffuse + specular));
+    float4 lightingColour = lightingColour * * textureColor;
+	
+	lightingColour = (ambient * (diffuse + specular));
+
+	
     
     return lightingColour;
 }
