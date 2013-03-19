@@ -23,6 +23,7 @@ bool Input::Initialise(HWND hwnd, HINSTANCE hInst)
 		if(FAILED(_keyboard->SetDataFormat(&c_dfDIKeyboard)))
 		{
 			return false;
+			// random
 		}
 	}
 	if(FAILED(_keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE)))
