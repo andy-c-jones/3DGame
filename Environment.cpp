@@ -110,7 +110,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 
 
 	D3DXVECTOR3 teapotPos = D3DXVECTOR3(0.0f, 0.0f, 30.0f);
-	D3DXVECTOR3 spherePos = D3DXVECTOR3(0.0f, 40.0f, 50.0f);
+	D3DXVECTOR3 spherePos = D3DXVECTOR3(0.0f, 20.0f, 10.0f);
 	D3DXVECTOR3 groundPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 ceilingPos = D3DXVECTOR3(0.0f, 70.0f, 0.0f);
 	D3DXVECTOR3 wallPos = D3DXVECTOR3(30.0f, 10.0f, 50.0f);
@@ -124,7 +124,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		MessageBoxA(NULL, "loading teapot mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}*/
-	_pSphere = new Mesh(_pd3dDevice, spherePos, "sphere.x","stone.dds");
+	_pSphere = new Mesh(_pd3dDevice, spherePos, "sphereT.x","stone.dds");
 	if( !(_pSphere->Load()) )
 	{
 		MessageBoxA(NULL, "loading sphere mesh failed.", "BOOM!", MB_OK);
