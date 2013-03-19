@@ -121,6 +121,7 @@ struct VS_OUTPUT
 	float3 worldPos  :  TEXCOORD0;
 	float3 normalW   :  TEXCOORD1;
 	float3 cam2Vert  :  TEXCOORD2;
+	//float2 textureUV : TEXCOORD3;
 };
 
 struct VS_OUTPUT_DEPTH
@@ -141,7 +142,8 @@ VS_OUTPUT_DEPTH depthMap_VS( float4 inPosition : POSITION )
 }
 
 VS_OUTPUT cubicShadowMapping_VS(float4 inPosition  : POSITION,
-                                float3 inNormal    : NORMAL)
+                                float3 inNormal    : NORMAL
+								/*float2 textureUV : TEXCOORD0*/)
 {
     VS_OUTPUT output;
 
@@ -151,6 +153,7 @@ VS_OUTPUT cubicShadowMapping_VS(float4 inPosition  : POSITION,
     output.position = mul(inPosition, worldViewProjMat);
     output.worldPos = positionW.xyz;
     output.normalW = mul(inNormal, worldMat).xyz;
+	//output.textureUV = textureUV;
     
     return output;
 }
@@ -192,9 +195,11 @@ float4 cubicShadowMapping_PS(VS_OUTPUT In) : COLOR0
 		specular += tempSpecular / NUMBER_OF_LIGHTS;
 	}
 
-    float4 lightingColour = lightingColour * * textureColor;
+	//textureColor = shaderTexture.Sample(SampleTypeWrap, In.textureUV);
+
+    //float4 lightingColour = lightingColour * textureColor;
 	
-	lightingColour = (ambient * (diffuse + specular));
+	float4 lightingColour = (ambient * (diffuse + specular));
 
 	
     

@@ -14,10 +14,10 @@ Environment::Environment(Input* input)
 
 	_pShadowEffect = NULL;
 
-	_pTeapot = NULL;
+	//_pTeapot = NULL;
 	_pSphere = NULL;
-	_pGround = NULL;
-	_pCeiling = NULL;
+	//_pGround = NULL;
+	//_pCeiling = NULL;
 
 	_lightMoveSpeed = 0.01f;
 	_font = NULL;
@@ -118,19 +118,19 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR4 lightPos = D3DXVECTOR4(0.0f, 20.0f, 0.0f, 1.0f);
 	D3DXVECTOR4 lightPos2 = D3DXVECTOR4(50.0f, 20.0f, 100.0f, 1.0f);
 	D3DXVECTOR4 lightPos3 = D3DXVECTOR4(-100.0f, 20.0f, 0.0f, 1.0f);
-	_pTeapot = new Mesh(_pd3dDevice, teapotPos, "teapot.x","stone.dds");
+	/*_pTeapot = new Mesh(_pd3dDevice, teapotPos, "teapot.x","stone.dds");
 	if( !(_pTeapot->Load()) )
 	{
 		MessageBoxA(NULL, "loading teapot mesh failed.", "BOOM!", MB_OK);
 		return false;
-	}
+	}*/
 	_pSphere = new Mesh(_pd3dDevice, spherePos, "sphere.x","stone.dds");
 	if( !(_pSphere->Load()) )
 	{
 		MessageBoxA(NULL, "loading sphere mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
-	_pCeiling = new Mesh(_pd3dDevice, ceilingPos, "roof.x","stone.dds");
+	/*_pCeiling = new Mesh(_pd3dDevice, ceilingPos, "roof.x","stone.dds");
 	if( !(_pCeiling->Load()) )
 	{
 		MessageBoxA(NULL, "loading ceiling mesh failed.", "BOOM!", MB_OK);
@@ -149,7 +149,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	{
 		MessageBoxA(NULL, "loading ground mesh failed.", "BOOM!", MB_OK);
 		return false;
-	}
+	}*/
 
 
 	_lightPosition[0] = lightPos;
@@ -198,7 +198,7 @@ void Environment::RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFac
 		return;
 	}
 
-	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pCeiling->GetWorldMat(), light->GetViewProjectionMatrix());
+	/*D3DXMatrixMultiply(&worldViewProjectionMatrix, _pCeiling->GetWorldMat(), light->GetViewProjectionMatrix());
 	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pCeiling->GetWorldMat());
 	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
 
@@ -228,7 +228,7 @@ void Environment::RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFac
 
 	_pShadowEffect->Effect->BeginPass(0);
 	_pTeapot->_pMesh->DrawSubset(0);
-	_pShadowEffect->Effect->EndPass();
+	_pShadowEffect->Effect->EndPass();*/
 
 	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pSphere->GetWorldMat(), light->GetViewProjectionMatrix());
 	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pSphere->GetWorldMat());
@@ -293,10 +293,10 @@ void Environment::RenderSceneWithShadowMap()
 
 	_pShadowEffect->Effect->Begin(&numOfPasses, NULL);
 	_pSphere->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
-	_pTeapot->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	/*_pTeapot->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pCeiling->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pGround->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
-	_pWall->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pWall->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);*/
 	_pShadowEffect->Effect->End();
 
 	_pShadowEffect->Effect->SetTechnique(_pShadowEffect->AmbientHandle);
@@ -379,19 +379,19 @@ void Environment::CleanUp()
 		_pShadowEffect = NULL;
 	}
 
-	if( _pTeapot != NULL )
+	/*if( _pTeapot != NULL )
 	{
 		_pTeapot->CleanUp();
 		delete _pTeapot;
 		_pTeapot = NULL;
-	}
+	}*/
 	if( _pSphere != NULL )
 	{
 		_pSphere->CleanUp();
 		delete _pSphere;
 		_pSphere = NULL;
 	}
-	if( _pGround != NULL )
+	/*if( _pGround != NULL )
 	{
 		_pGround->CleanUp();
 		delete _pGround;
@@ -408,7 +408,7 @@ void Environment::CleanUp()
 		_pCeiling->CleanUp();
 		delete _pCeiling;
 		_pCeiling = NULL;
-	}
+	}*/
 	if(_font != NULL)
 	{
 		_font->Release();

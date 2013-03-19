@@ -16,11 +16,11 @@ class Environment
 	ShadowEffect* _pShadowEffect;
 	D3DXVECTOR4 _lightPosition[3];
 
-	Mesh* _pTeapot;
+	//Mesh* _pTeapot;
 	Mesh* _pSphere;
-	Mesh* _pGround;
-	Mesh* _pCeiling;
-	Mesh* _pWall;
+	//Mesh* _pGround;
+	//Mesh* _pCeiling;
+	//Mesh* _pWall;
 
 	LPD3DXFONT _font; 
 	D3DXFONT_DESC _fontDesc;
