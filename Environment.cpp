@@ -23,8 +23,10 @@ Environment::Environment(Input* input)
 	_font = NULL;
 	_fontDesc = D3DXFONT_DESC();
 
-	_fontPosition.top = 10;
-	_fontPosition.left = 10;
+	_textFont = NULL;
+
+	_fontPosition.top = 180;
+	_fontPosition.left = 180;
 	_fontPosition.right = 200;
 	_fontPosition.bottom = 200;
 	_pInput = input;
@@ -90,6 +92,10 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	}
 
 	D3DXCreateFontIndirect(_pd3dDevice,&_fontDesc,&_font);
+
+	_textFont = new Text;
+
+	_textFont->Initialize(_pd3dDevice);
 
 	D3DXVECTOR3 initialCamPos = D3DXVECTOR3(0.0f, 20.0f, 0.0f);
 
@@ -306,6 +312,8 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 {
 	OnFrameMove(inTimeDelta);
 
+	
+
 	if( SUCCEEDED(_pd3dDevice->BeginScene()) )
 	{
 		for (int i = 0; i < 3; i++)
@@ -313,13 +321,19 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 			FillCubicShadowMap(_pLight[i]);
 		}
 		RenderSceneWithShadowMap();
-
-		_font->DrawText(NULL,
+		char* text = strdup(fps.c_str());
+		/*_font->DrawText(NULL,
 			fps.c_str(),
 			-1,
 			&_fontPosition,
 			DT_LEFT,
-			0xffffffff);
+			0xffffffff);*/
+
+		_textFont->Print(text,20,20,0xffffffff,NULL);
+
+		free(text);
+
+		
 	}
 	_pd3dDevice->EndScene();
 

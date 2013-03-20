@@ -98,6 +98,7 @@
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ShadowEffect.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +110,7 @@
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ShadowEffect.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>

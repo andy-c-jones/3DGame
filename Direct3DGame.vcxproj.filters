@@ -14,6 +14,7 @@
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -43,6 +44,7 @@
     <ClInclude Include="Light.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Text.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">

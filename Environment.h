@@ -3,6 +3,7 @@
 #include "PlayerCamera.h"
 #include "Mesh.h"
 #include "Light.h"
+#include "Text.h"
 
 class Environment
 {
@@ -25,6 +26,8 @@ class Environment
 	LPD3DXFONT _font; 
 	D3DXFONT_DESC _fontDesc;
 	RECT _fontPosition;
+
+	Text* _textFont;
 
 	float _lightMoveSpeed;
 
