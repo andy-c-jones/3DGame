@@ -330,6 +330,7 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 			0xffffffff);*/
 
 		_textFont->Print(text,20,20,0xffffffff,NULL);
+		_textFont->Print("Highscores: ",40,20,0xffffffff,NULL);
 
 		free(text);
 
