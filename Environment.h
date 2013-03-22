@@ -4,6 +4,7 @@
 #include "Mesh.h"
 #include "Light.h"
 #include "Text.h"
+#include "Score.h"
 
 class Environment
 {
@@ -28,6 +29,7 @@ class Environment
 	RECT _fontPosition;
 
 	Text* _textFont;
+	Score* _score;
 
 	float _lightMoveSpeed;
 

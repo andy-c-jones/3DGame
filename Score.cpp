@@ -17,9 +17,14 @@ void Score::IncrimentScore()
 	_score += 10;
 }
 
-int Score::GetScore()
+char* Score::GetScore()
 {
-	return _score;
+	
+	std::ostringstream out;
+	out << _score;
+
+	char* output =  strdup(out.str().c_str());
+	return output;
 
 }
 

@@ -24,6 +24,7 @@ Environment::Environment(Input* input)
 	_fontDesc = D3DXFONT_DESC();
 
 	_textFont = NULL;
+	_score = NULL;
 
 	_fontPosition.top = 180;
 	_fontPosition.left = 180;
@@ -96,6 +97,9 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	_textFont = new Text;
 
 	_textFont->Initialize(_pd3dDevice);
+
+	_score = new Score;
+
 
 	D3DXVECTOR3 initialCamPos = D3DXVECTOR3(0.0f, 20.0f, 0.0f);
 
@@ -313,7 +317,7 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 	OnFrameMove(inTimeDelta);
 
 	
-
+	
 	if( SUCCEEDED(_pd3dDevice->BeginScene()) )
 	{
 		for (int i = 0; i < 3; i++)
@@ -330,7 +334,10 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 			0xffffffff);*/
 
 		_textFont->Print(text,20,20,0xffffffff,NULL);
-		_textFont->Print("Highscores: ",40,20,0xffffffff,NULL);
+
+		_textFont->Print("Highscore: ",40,20,0xffffffff,NULL);
+		
+		_textFont->Print(_score->GetScore(),40,100,0xffffffff,NULL);
 
 		free(text);
 
