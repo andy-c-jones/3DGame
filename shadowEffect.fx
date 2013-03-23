@@ -3,6 +3,7 @@ float4x4 worldViewProjMat;
 textureCUBE cubeShadowMap; 
 textureCUBE cubeShadowMap2; 
 textureCUBE cubeShadowMap3; 
+Texture2D materialTexture;
 
 const float4 materialAmbient = float4(0.9f, 0.9f, 0.9f, 1.0f);  
 const float4 materialDiffuse = float4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -43,9 +44,20 @@ samplerCUBE cubeShadowMapSampler2 = sampler_state
     AddressV = wrap;
 };
 
+
 samplerCUBE cubeShadowMapSampler3 = sampler_state
 {
 	Texture = <cubeShadowMap3>;
+    MipFilter = LINEAR;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
+    AddressU = wrap;
+    AddressV = wrap;
+};
+
+sampler2D textureSampler = sampler_state
+{
+	Texture = <materialTexture>;
     MipFilter = LINEAR;
     MinFilter = LINEAR;
     MagFilter = LINEAR;
@@ -113,6 +125,7 @@ struct VS_OUTPUT
 	float3 worldPos  :  TEXCOORD0;
 	float3 normalW   :  TEXCOORD1;
 	float3 cam2Vert  :  TEXCOORD2;
+	float2 tex	     :  TEXCOORD3;
 };
 
 struct VS_OUTPUT_DEPTH
@@ -133,7 +146,8 @@ VS_OUTPUT_DEPTH depthMap_VS( float4 inPosition : POSITION )
 }
 
 VS_OUTPUT cubicShadowMapping_VS(float4 inPosition  : POSITION,
-                                float3 inNormal    : NORMAL)
+                                float3 inNormal    : NORMAL,
+								float2 tex		   : TEXCOORD0)
 {
     VS_OUTPUT output;
 
@@ -143,7 +157,7 @@ VS_OUTPUT cubicShadowMapping_VS(float4 inPosition  : POSITION,
     output.position = mul(inPosition, worldViewProjMat);
     output.worldPos = positionW.xyz;
     output.normalW = mul(inNormal, worldMat).xyz;
-    
+    output.tex = tex;
     return output;
 }
 
@@ -183,9 +197,11 @@ float4 cubicShadowMapping_PS(VS_OUTPUT In) : COLOR0
 		specular += tempSpecular / NUMBER_OF_LIGHTS;
 	}
 
-    float4 lightingColour = (ambient * (diffuse + specular));
+	float4 textureColor = tex2D(textureSampler, In.tex);
+	textureColor.a = 1;
+    float4 lightingColour = textureColor + (ambient * (diffuse + specular));
     
-    return lightingColour;
+    return saturate(lightingColour);
 }
 
 float4 ambient_PS(float4 posWVP : POSITION) : COLOR0

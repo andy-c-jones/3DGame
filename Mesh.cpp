@@ -8,6 +8,7 @@ Mesh::Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFile
 	_meshFileName = meshFileName;
 	_pMesh = NULL;
 	_matBuffer = NULL;
+	Texture = NULL;
 }
 
 Mesh::~Mesh()
@@ -25,7 +26,7 @@ void Mesh::Translate(float inX, float inY, float inZ)
 	D3DXMatrixTranslation(&_worldMatrix, inX, inY, inZ);
 }
 
-bool Mesh::Load()
+bool Mesh::Load(std::string textureFileName)
 {
 	if( FAILED( D3DXLoadMeshFromX( _meshFileName.c_str(), D3DXMESH_MANAGED,	_pd3dDevice, NULL, &_matBuffer, NULL, &_numMaterials, &_pMesh)))
 	{
@@ -33,6 +34,11 @@ bool Mesh::Load()
 		{
 			return false;
 		}
+	}
+
+	if( FAILED(D3DXCreateTextureFromFile(_pd3dDevice, textureFileName.c_str(), &Texture)))
+	{
+		return false;
 	}
 	return true;
 }
@@ -63,6 +69,11 @@ void Mesh::RenderMeshWithShadowCube(D3DXMATRIXA16* viewProjectionMatrix, ShadowE
 
 void Mesh::CleanUp()
 {
+	if (Texture != NULL)
+	{
+		Texture->Release();
+		Texture = NULL;
+	}	
 	if( _pMesh != NULL )
 	{
 		_pMesh->Release();

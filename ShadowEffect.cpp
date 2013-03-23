@@ -14,6 +14,7 @@ void ShadowEffect::GetHandles()
 	LightPositionHandle = Effect->GetParameterByName(NULL, "lightPosition");
 	LightNumberHandle = Effect->GetParameterByName(NULL, "lightNumber");
 	ShadowPositionHandle = Effect->GetParameterByName(NULL, "shadowLightPosition");
+	MaterialTexture = Effect->GetParameterByName(NULL, "materialTexture");
 }
 
 bool ShadowEffect::ValidateTechniques()

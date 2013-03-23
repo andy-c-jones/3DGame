@@ -19,7 +19,7 @@ public:
 	D3DXHANDLE LightPositionHandle;
 	D3DXHANDLE LightNumberHandle;
 	D3DXHANDLE ShadowPositionHandle;
-
+	D3DXHANDLE MaterialTexture;
 
 	ShadowEffect(LPDIRECT3DDEVICE9* device, std::string effectFileName) 
 		: Shader(device, effectFileName)

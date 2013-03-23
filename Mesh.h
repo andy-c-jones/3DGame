@@ -13,6 +13,7 @@ class Mesh
 
 public:
 	ID3DXMesh* _pMesh;
+	IDirect3DTexture9* Texture;
 
 	Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFileName);
 	~Mesh();
@@ -20,7 +21,7 @@ public:
 	D3DXMATRIXA16* GetWorldMat();
 	void Translate(float inX, float inY, float inZ);
 
-	bool Load();
+	bool Load(std::string textureFileName);
 	void RenderAmbient(D3DXMATRIXA16* inViewProjMat, 
 					   ShadowEffect* inShadowMapper);
 

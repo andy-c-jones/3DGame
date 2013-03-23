@@ -78,4 +78,12 @@
       <Filter>Data</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="concrete.jpg">
+      <Filter>Data</Filter>
+    </Image>
+    <Image Include="green.jpg">
+      <Filter>Data</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

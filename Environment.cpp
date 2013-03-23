@@ -119,33 +119,33 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR4 lightPos2 = D3DXVECTOR4(50.0f, 20.0f, 100.0f, 1.0f);
 	D3DXVECTOR4 lightPos3 = D3DXVECTOR4(-100.0f, 20.0f, 0.0f, 1.0f);
 	_pTeapot = new Mesh(_pd3dDevice, teapotPos, "teapot.x");
-	if( !(_pTeapot->Load()) )
+	if( !(_pTeapot->Load("green.jpg")) )
 	{
 		MessageBoxA(NULL, "loading teapot mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
 	_pSphere = new Mesh(_pd3dDevice, spherePos, "sphere.x");
-	if( !(_pSphere->Load()) )
+	if( !(_pSphere->Load("concrete.jpg")) )
 	{
 		MessageBoxA(NULL, "loading sphere mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
 	_pCeiling = new Mesh(_pd3dDevice, ceilingPos, "roof.x");
-	if( !(_pCeiling->Load()) )
+	if( !(_pCeiling->Load("concrete.jpg")) )
 	{
 		MessageBoxA(NULL, "loading ceiling mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
 
 	_pGround = new Mesh(_pd3dDevice, groundPos, "plane.x");
-	if( !(_pGround->Load()) )
+	if( !(_pGround->Load("concrete.jpg")) )
 	{
 		MessageBoxA(NULL, "loading ground mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
 
 	_pWall = new Mesh(_pd3dDevice, wallPos, "Wall1.x");
-	if( !(_pWall->Load()) )
+	if( !(_pWall->Load("concrete.jpg")) )
 	{
 		MessageBoxA(NULL, "loading ground mesh failed.", "BOOM!", MB_OK);
 		return false;
@@ -292,10 +292,15 @@ void Environment::RenderSceneWithShadowMap()
 	_pShadowEffect->Effect->SetTechnique(_pShadowEffect->CubicShadowMappingHandle);
 
 	_pShadowEffect->Effect->Begin(&numOfPasses, NULL);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pSphere->Texture);
 	_pSphere->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pTeapot->Texture);
 	_pTeapot->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pCeiling->Texture);
 	_pCeiling->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pGround->Texture);
 	_pGround->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pWall->Texture);
 	_pWall->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->End();
 
