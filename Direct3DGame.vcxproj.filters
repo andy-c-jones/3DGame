@@ -77,6 +77,15 @@
     <None Include="Wall1.x">
       <Filter>Data</Filter>
     </None>
+    <None Include="barell.tga">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="barrels.x">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="b.x">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="concrete.jpg">
