@@ -2,6 +2,7 @@
 #include <mmsystem.h>
 #include ".\Environment.h"
 #include ".\timeManager.h"
+#include ".\GameManager.h"
 
 LRESULT WINAPI MsgProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
@@ -60,9 +61,17 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, INT )
 		return false;
 	}
 
-	Environment game = Environment(pInput);
+	/*Environment game = Environment(pInput);
 
 	if( !(game.Initialise(hWnd, hInst, windowWidth, windowHeight, true)) )
+	{
+		MessageBoxA(NULL, "Failed to initialise the game.", NULL, MB_OK);
+		return 0;
+	}*/
+
+	GameManager gameManager = GameManager(pInput);
+
+	if( !(gameManager.Initialise(hWnd, hInst, windowWidth, windowHeight, true)) )
 	{
 		MessageBoxA(NULL, "Failed to initialise the game.", NULL, MB_OK);
 		return 0;
@@ -86,7 +95,7 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, INT )
 		else
 		{
 			timeManager.UpdateLastTime();
-			game.Render(timeManager.GetTimeDelta(), timeManager.GetFPS(timeManager.GetTimeDelta()));
+			gameManager.update(timeManager.GetTimeDelta(), timeManager.GetFPS(timeManager.GetTimeDelta()));
 			timeManager.UpdateCurrentTime();
 			timeManager.UpdateTimeDelta();
 		}

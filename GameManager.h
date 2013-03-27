@@ -11,7 +11,7 @@ public:
 	~GameManager(void);
 
 	bool Initialise(HWND hWnd, HINSTANCE instance, UINT screenWidth, UINT screenHeight, BOOL windowed);
-	void update(void);
+	void update(DWORD timeDelta, std::string fps);
 	enum { MENU = 1, GAME = 2 };
 
 private:
@@ -20,6 +20,10 @@ private:
 	Menu* _gameMenu;
 	Input* _input;
 	int activeState;
+	HWND _hWnd; 
+	HINSTANCE _instance; 
+	UINT _screenWidth; 
+	UINT _screenHeight;
 
 };
 
