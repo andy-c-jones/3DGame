@@ -2,6 +2,8 @@
 #include "Camera.h"
 #include "Input.h"
 
+
+
 class PlayerCamera : public Camera
 {
 	Input* _pInput;
