@@ -37,6 +37,7 @@ public:
 	int IsAPressed();
 	int IsDPressed();
 	int IsEscapePressed();
+	int IsEnterPressed();
 
 	void CleanUp();
 };
