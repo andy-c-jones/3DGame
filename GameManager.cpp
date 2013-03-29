@@ -23,7 +23,7 @@ bool GameManager::Initialise(HWND hWnd, HINSTANCE instance, UINT screenWidth, UI
 	
 	_gameMenu = new Menu;
 
-	if( !(_gameMenu->Intialize()) )
+	if( !(_gameMenu->Intialize(_input,hWnd,screenWidth,screenHeight)) )
 	{
 		MessageBoxA(NULL, "Failed to initialise the Menu.", NULL, MB_OK);
 		return 0;
@@ -40,7 +40,14 @@ void GameManager::update(DWORD timeDelta, std::string fps)
 
 	if (activeState == MENU)
 	{
-		if (RungameTemp == true)
+		_gameMenu->update();
+
+		if(_gameMenu->getState() == Menu::EXIT)
+		{
+			PostQuitMessage(0);
+		}
+
+		if ((_gameMenu->getState() == Menu::NEW_GAME))
 		{
 			_mainGame = new Environment(_input);
 
@@ -50,6 +57,12 @@ void GameManager::update(DWORD timeDelta, std::string fps)
 			}
 			activeState = GAME;
 		}
+	}
+
+	if (activeState == MENU)
+	{
+
+		_gameMenu->render();
 	}
 
 	if (activeState == GAME)
