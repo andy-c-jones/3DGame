@@ -56,7 +56,9 @@
     <ClInclude Include="GameManager.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Menu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
