@@ -24,6 +24,9 @@ class Environment
 	Mesh* _pCeiling;
 	Mesh* _pWall;
 
+	D3DXVECTOR3* _translatedLook;
+	D3DXVECTOR3* _translatedPos;
+
 	LPD3DXFONT _font; 
 	D3DXFONT_DESC _fontDesc;
 	RECT _fontPosition;

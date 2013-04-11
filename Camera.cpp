@@ -70,6 +70,11 @@ D3DXMATRIXA16* Camera::GetViewProjectionMatrix()
 
 D3DXVECTOR3* Camera::GetLook()
 {
+	/*D3DXVECTOR3 look;
+	look.x = _viewMatrix._13;
+	look.y = _viewMatrix._23;
+	look.z = _viewMatrix._33;
+	D3DXVECTOR3* lookBack = new D3DXVECTOR3(-look.x,-look.y,-look.z);*/
 	return &_look3;
 }
 

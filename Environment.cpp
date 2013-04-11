@@ -31,6 +31,9 @@ Environment::Environment(Input* input)
 	_fontPosition.right = 200;
 	_fontPosition.bottom = 200;
 	_pInput = input;
+
+	_translatedLook = NULL;
+	_translatedPos = NULL;
 }
 
 Environment::~Environment()
@@ -305,14 +308,25 @@ void Environment::RenderSceneWithShadowMap()
 	_pShadowEffect->Effect->Begin(&numOfPasses, NULL);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pSphere->Texture);
 	_pSphere->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
-			//IF LOOKAT ray Intersects then dont draw 
+	
+	//IF LOOKAT ray Intersects then dont draw 
 	BOOL hit = false;
-	D3DXIntersect(_pTeapot->_pMesh, _pMainCamera->GetPosition(),_pMainCamera->GetLook(), &hit, NULL, NULL, NULL,NULL,NULL,NULL);
+	//VECTORS NEED TO BE IN MODEL SPACE!!!!
+	_translatedLook = _pMainCamera->GetLook();
+	_translatedPos = new D3DXVECTOR3(_pMainCamera->GetPosition()->x, _pMainCamera->GetPosition()->y, _pMainCamera->GetPosition()->z);
+	D3DXMATRIX inverseWorld;
+	D3DXMATRIXA16* world = _pTeapot->GetWorldMat();
+	D3DXMatrixInverse(&inverseWorld, 0, world);
+	D3DXVec3TransformNormal(_translatedLook, _translatedLook, &inverseWorld);
+	D3DXVec3TransformCoord(_translatedPos, _translatedPos, &inverseWorld);
+
+	D3DXIntersect(_pTeapot->_pMesh, _translatedPos, _translatedLook, &hit, NULL, NULL, NULL,NULL,NULL,NULL);
 	if(hit == 0)
 	{
-	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pTeapot->Texture);
-	_pTeapot->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+		_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pTeapot->Texture);
+		_pTeapot->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	}
+
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pCeiling->Texture);
 	_pCeiling->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pGround->Texture);
@@ -338,12 +352,6 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 		}
 		RenderSceneWithShadowMap();
 		char* text = strdup(fps.c_str());
-		/*_font->DrawText(NULL,
-			fps.c_str(),
-			-1,
-			&_fontPosition,
-			DT_LEFT,
-			0xffffffff);*/
 
 		_textFont->Print(text,20,20,0xffffffff,NULL);
 
@@ -352,8 +360,6 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 		_textFont->Print(_score->GetScore(),40,100,0xffffffff,NULL);
 
 		free(text);
-
-		
 	}
 	_pd3dDevice->EndScene();
 
@@ -447,5 +453,15 @@ void Environment::CleanUp()
 	{
 		_font->Release();
 		_font = NULL;
+	}
+	if(_translatedPos != NULL)
+	{
+		delete _translatedPos;
+		_translatedPos = NULL;
+	}
+	if(_translatedLook != NULL)
+	{
+		delete _translatedLook;
+		_translatedLook = NULL;
 	}
 }
