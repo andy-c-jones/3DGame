@@ -236,6 +236,7 @@ void Environment::RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFac
 	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pTeapot->GetWorldMat());
 	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
 
+
 	_pShadowEffect->Effect->BeginPass(0);
 	_pTeapot->_pMesh->DrawSubset(0);
 	_pShadowEffect->Effect->EndPass();
@@ -304,8 +305,14 @@ void Environment::RenderSceneWithShadowMap()
 	_pShadowEffect->Effect->Begin(&numOfPasses, NULL);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pSphere->Texture);
 	_pSphere->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+			//IF LOOKAT ray Intersects then dont draw 
+	BOOL hit = false;
+	D3DXIntersect(_pTeapot->_pMesh, _pMainCamera->GetPosition(),_pMainCamera->GetLook(), &hit, NULL, NULL, NULL,NULL,NULL,NULL);
+	if(hit == 0)
+	{
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pTeapot->Texture);
 	_pTeapot->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	}
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pCeiling->Texture);
 	_pCeiling->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pGround->Texture);
