@@ -9,6 +9,7 @@ Menu::Menu(void)
 	_newGameHigh = 0;
 	_exitGame = 0;
 	_exitGameHigh = 0;
+	_count = 0;
 }
 
 
@@ -33,21 +34,23 @@ bool Menu::Intialize(Input* input,HWND hwnd, int width, int height)
 	//load menu Images
 	//load background menubackground.jpg
 	_background = new MenuImages;
-	_background->LoadSurface(direct3dDevice, "menubackground.jpg");
+	_background->LoadSurface(direct3dDevice, "BackTest.jpg");
 	
+	
+
 	//load new game image
 	_newGame = new MenuImages;
-	_newGame->LoadSurface(direct3dDevice, "newgame.jpg");
+	_newGame->LoadSurface(direct3dDevice, "exit.jpg");
 	_newGame->setPosition(200,300);
 	_newGameHigh = new MenuImages;
-	_newGameHigh->LoadSurface(direct3dDevice, "newgameh.jpg");
+	_newGameHigh->LoadSurface(direct3dDevice, "exith.jpg");
 	_newGameHigh->setPosition(200,300);
 	//load exit image
 	_exitGame = new MenuImages;
-	_exitGame->LoadSurface(direct3dDevice, "exit.jpg");
+	_exitGame->LoadSurface(direct3dDevice, "newgame.jpg");
 	_exitGame->setPosition(200,400);
 	_exitGameHigh = new MenuImages;
-	_exitGameHigh->LoadSurface(direct3dDevice, "exith.jpg");
+	_exitGameHigh->LoadSurface(direct3dDevice, "newgameh.jpg");
 	_exitGameHigh->setPosition(200,400);
 
 	
@@ -111,17 +114,20 @@ void Menu::update()
 {
 	_userInput->GetInputData();
 
-	if (_userInput->IsWPressed() || _userInput->IsSPressed())
+	if (_count == 0)
 	{
-		if (_menuItemSelected == 0)
+		if (_userInput->IsWPressed() || _userInput->IsSPressed())
 		{
-			_menuItemSelected = 1;
-		} 
-		else 
-		{
-			_menuItemSelected = 0;
+			if (_menuItemSelected == 0)
+			{
+				_menuItemSelected = 1;
+			} 
+			else 
+			{
+				_menuItemSelected = 0;
+			}
+			_count = 100;
 		}
-
 	}
 
 	if (_userInput->IsEnterPressed())
@@ -132,6 +138,11 @@ void Menu::update()
 			case 1: {_state = EXIT; break;}
 		}	
 
+	}
+
+	if( _count > 0)
+	{
+		_count--;
 	}
 
 }

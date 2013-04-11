@@ -30,6 +30,7 @@ private:
 
 	int _menuItemSelected;
 	int _state;
+	int _count;
 
 	bool IntializeDirectx(HWND hwnd, int width, int height, bool fullscreen);
 
