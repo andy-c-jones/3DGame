@@ -44,7 +44,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -91,24 +91,34 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Environment.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuImages.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ShadowEffect.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Environment.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuImages.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ShadowEffect.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>

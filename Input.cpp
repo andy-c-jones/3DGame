@@ -122,6 +122,11 @@ int Input::IsEscapePressed()
 	return KEYDOWN(_keyBuffer, DIK_ESCAPE);
 }
 
+int Input::IsEnterPressed()
+{
+	return KEYDOWN(_keyBuffer, DIK_RETURN);
+}
+
 void Input::CleanUp()
 {
 	if(_directInput != NULL)

@@ -14,6 +14,11 @@
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuImages.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -41,6 +46,21 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuImages.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

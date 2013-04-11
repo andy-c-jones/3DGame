@@ -1,8 +1,10 @@
-#pragma once
+ #pragma once
 #include "Input.h"
 #include "PlayerCamera.h"
 #include "Mesh.h"
 #include "Light.h"
+#include "Text.h"
+#include "Score.h"
 
 class Environment
 {
@@ -25,6 +27,9 @@ class Environment
 	LPD3DXFONT _font; 
 	D3DXFONT_DESC _fontDesc;
 	RECT _fontPosition;
+
+	Text* _textFont;
+	Score* _score;
 
 	float _lightMoveSpeed;
 
