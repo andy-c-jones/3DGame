@@ -48,7 +48,7 @@ bool MenuImages::LoadSurface(LPDIRECT3DDEVICE9 device, std::string filename)
 	}
 
 
-	hResult = D3DXLoadSurfaceFromFile(_surface, NULL, NULL, filename.c_str(), NULL, D3DX_DEFAULT,  0, NULL);
+	hResult = D3DXLoadSurfaceFromFile(_surface, NULL, NULL, filename.c_str(), NULL, D3DX_DEFAULT,0, NULL);
 
 	if (FAILED(hResult))
 	{
