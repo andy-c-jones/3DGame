@@ -26,6 +26,7 @@ Environment::Environment(Input* input)
 	_textFont = NULL;
 	_score = NULL;
 	_crosshair = 0;
+	_crossHair = 0;
 
 	_fontPosition.top = 180;
 	_fontPosition.left = 180;
@@ -107,6 +108,11 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	_crosshair = new MenuImages;
 	_crosshair->LoadSurface(_pd3dDevice, "crosshair.jpg");
 	_crosshair->setPosition(487,359);
+
+	_crossHair = new MenuSprites;
+	_crossHair->loadSprite(_pd3dDevice,"crosshair.jpg",hWnd);
+	_crossHair->setSize(50,50);
+	_crossHair->setPosition(487,359);
 
 	D3DXVECTOR3 initialCamPos = D3DXVECTOR3(0.0f, 20.0f, 0.0f);
 
@@ -365,7 +371,8 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 
 		free(text);
 
-		_crosshair->render(_pd3dDevice);
+		//_crosshair->render(_pd3dDevice);
+		_crossHair->render(_pd3dDevice,200);
 	}
 	_pd3dDevice->EndScene();
 

@@ -6,6 +6,7 @@
 #include "Text.h"
 #include "Score.h"
 #include "MenuImages.h"
+#include "MenuSprites.h"
 
 class Environment
 {
@@ -36,6 +37,8 @@ class Environment
 	Score* _score;
 
 	MenuImages* _crosshair;
+	MenuSprites* _crossHair;
+
 
 	float _lightMoveSpeed;
 
