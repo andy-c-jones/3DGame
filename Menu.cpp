@@ -10,6 +10,7 @@ Menu::Menu(void)
 	_exitGame = 0;
 	_exitGameHigh = 0;
 	_count = 0;
+	_testSprite = 0;
 }
 
 
@@ -36,7 +37,10 @@ bool Menu::Intialize(Input* input,HWND hwnd, int width, int height)
 	_background = new MenuImages;
 	_background->LoadSurface(direct3dDevice, "BackTest.jpg");
 	
-	
+	_testSprite = new MenuSprites;
+	_testSprite->loadSprite(direct3dDevice,"crosshair.jpg",hwnd);
+	_testSprite->setPosition(300,200);
+	_testSprite->setSize(100,100);
 
 	//load new game image
 	_newGame = new MenuImages;
@@ -164,6 +168,7 @@ void Menu::render()
 	direct3dDevice->BeginScene();
 
 	_background->render(direct3dDevice);
+	_testSprite->render(direct3dDevice,200);
 	
 	//render menu items based on which is highlighted
 	if (_menuItemSelected == 0){

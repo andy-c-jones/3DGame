@@ -19,6 +19,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuImages.cpp" />
+    <ClCompile Include="MenuSprites.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -63,6 +64,7 @@
     <ClInclude Include="MenuImages.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="MenuSprites.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">

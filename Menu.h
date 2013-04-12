@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "d3dx9.h"
 #include "MenuImages.h"
+#include "MenuSprites.h"
 
 class Menu
 {
@@ -27,6 +28,7 @@ private:
 	MenuImages* _newGameHigh;
 	MenuImages* _exitGame;
 	MenuImages* _exitGameHigh;
+	MenuSprites* _testSprite;
 
 	int _menuItemSelected;
 	int _state;
