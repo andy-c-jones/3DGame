@@ -67,7 +67,7 @@ void GameManager::update(DWORD timeDelta, std::string fps)
 
 	if (activeState == GAME)
 	{
-
+		_mainGame->Update();
 		_mainGame->Render(timeDelta,fps);
 
 	}

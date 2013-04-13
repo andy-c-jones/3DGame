@@ -14,6 +14,8 @@ class Mesh
 public:
 	ID3DXMesh* _pMesh;
 	IDirect3DTexture9* Texture;
+	bool Visible;
+	int timeSinceShot;
 
 	Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFileName);
 	~Mesh();
@@ -24,7 +26,6 @@ public:
 	bool Load(std::string textureFileName);
 	void RenderAmbient(D3DXMATRIXA16* inViewProjMat, 
 					   ShadowEffect* inShadowMapper);
-
 	void RenderMeshWithShadowCube(D3DXMATRIXA16* inViewProjMat, 
 								  ShadowEffect* inShadowMapper);
 	void CleanUp();

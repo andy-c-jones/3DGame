@@ -318,20 +318,13 @@ void Environment::RenderSceneWithShadowMap()
 	_pShadowEffect->Effect->Begin(&numOfPasses, NULL);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pSphere->Texture);
 	_pSphere->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
-	
-	//IF LOOKAT ray Intersects then dont draw 
-	BOOL hit = false;
-	//VECTORS NEED TO BE IN MODEL SPACE!!!!
-	_translatedLook = _pMainCamera->GetLook();
-	_translatedPos = new D3DXVECTOR3(_pMainCamera->GetPosition()->x, _pMainCamera->GetPosition()->y, _pMainCamera->GetPosition()->z);
-	D3DXMATRIX inverseWorld;
-	D3DXMATRIXA16* world = _pTeapot->GetWorldMat();
-	D3DXMatrixInverse(&inverseWorld, 0, world);
-	D3DXVec3TransformNormal(_translatedLook, _translatedLook, &inverseWorld);
-	D3DXVec3TransformCoord(_translatedPos, _translatedPos, &inverseWorld);
 
-	D3DXIntersect(_pTeapot->_pMesh, _translatedPos, _translatedLook, &hit, NULL, NULL, NULL,NULL,NULL,NULL);
-	if(hit == 0)
+
+	if(_pTeapot->timeSinceShot-- == 0)
+	{
+		_pTeapot->Visible = true;
+	}
+	if(_pTeapot->Visible)
 	{
 		_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pTeapot->Texture);
 		_pTeapot->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
@@ -348,11 +341,38 @@ void Environment::RenderSceneWithShadowMap()
 	_pShadowEffect->Effect->SetTechnique(_pShadowEffect->AmbientHandle);
 }
 
+void Environment::Update()
+{
+	//_pTeapot->Translate(
+	if(_pInput->IsLeftMouseButtonPressed())
+	{
+		BOOL hit = false;
+		_translatedLook = _pMainCamera->GetLook();
+		_translatedPos = new D3DXVECTOR3(_pMainCamera->GetPosition()->x, _pMainCamera->GetPosition()->y, _pMainCamera->GetPosition()->z);
+		D3DXMATRIX inverseWorld;
+
+		if(_pTeapot->Visible)
+		{
+			D3DXMATRIXA16* world = _pTeapot->GetWorldMat();
+			D3DXMatrixInverse(&inverseWorld, 0, world);
+			D3DXVec3TransformNormal(_translatedLook, _translatedLook, &inverseWorld);
+			D3DXVec3TransformCoord(_translatedPos, _translatedPos, &inverseWorld);
+			D3DXIntersect(_pTeapot->_pMesh, _translatedPos, _translatedLook, &hit, NULL, NULL, NULL,NULL,NULL,NULL);
+
+			if(hit == 1)
+			{
+				_score->IncrimentScore();
+				_pTeapot->Visible = false;
+				_pTeapot->timeSinceShot = 1000;
+			}
+		}
+	}
+}
+
+
 void Environment::Render(DWORD inTimeDelta, std::string fps)
 {
 	OnFrameMove(inTimeDelta);
-
-	
 	
 	if( SUCCEEDED(_pd3dDevice->BeginScene()) )
 	{

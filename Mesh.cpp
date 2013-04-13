@@ -9,6 +9,7 @@ Mesh::Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFile
 	_pMesh = NULL;
 	_matBuffer = NULL;
 	Texture = NULL;
+	Visible = true;
 }
 
 Mesh::~Mesh()

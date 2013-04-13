@@ -38,6 +38,7 @@ public:
 	int IsDPressed();
 	int IsEscapePressed();
 	int IsEnterPressed();
+	bool IsLeftMouseButtonPressed();
 
 	void CleanUp();
 };
