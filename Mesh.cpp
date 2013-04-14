@@ -2,6 +2,7 @@
 
 Mesh::Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFileName)
 {
+	_position = position;
 	_pd3dDevice = device;
 	D3DXMatrixIdentity(&_worldMatrix);
 	D3DXMatrixTranslation(&_worldMatrix, position.x, position.y, position.z);
@@ -23,8 +24,12 @@ D3DXMATRIXA16* Mesh::GetWorldMat()
 
 void Mesh::Translate(float inX, float inY, float inZ)
 {
+	_position.x = _position.x + inX;
+	_position.y = _position.y + inY;
+	_position.z = _position.z + inZ;
+
 	D3DXMatrixIdentity(&_worldMatrix);
-	D3DXMatrixTranslation(&_worldMatrix, inX, inY, inZ);
+	D3DXMatrixTranslation(&_worldMatrix, _position.x, _position.y, _position.z);
 }
 
 bool Mesh::Load(std::string textureFileName)

@@ -191,7 +191,7 @@ void Environment::OnFrameMove(DWORD inTimeDelta)
 	{
 		_lightMoveSpeed = -_lightMoveSpeed;
 	}
-
+	_pTeapot->Translate(_lightMoveSpeed,0,0);
 	_lightPosition[0].x += _lightMoveSpeed;
 
 	_lightPosition[1].z += _lightMoveSpeed;

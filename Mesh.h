@@ -10,7 +10,7 @@ class Mesh
 	DWORD _numMaterials;
 	std::string _meshFileName;
 	ID3DXBuffer* _matBuffer;
-
+	D3DXVECTOR3 _position;
 public:
 	ID3DXMesh* _pMesh;
 	IDirect3DTexture9* Texture;
