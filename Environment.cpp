@@ -19,7 +19,7 @@ Environment::Environment(Input* input)
 	_pGround = NULL;
 	_pCeiling = NULL;
 
-	_lightMoveSpeed = 0.01f;
+	_lightMoveSpeed = 0.03f;
 	_font = NULL;
 	_fontDesc = D3DXFONT_DESC();
 
@@ -114,7 +114,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	_crossHair->setSize(50,50);
 	_crossHair->setPosition(487,359);
 
-	D3DXVECTOR3 initialCamPos = D3DXVECTOR3(0.0f, 20.0f, 0.0f);
+	D3DXVECTOR3 initialCamPos = D3DXVECTOR3(0.0f, 20.0f, -300.0f);
 
 	for(int i = 0; i < 3; i++)
 	{
@@ -139,8 +139,8 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR3 wallPos = D3DXVECTOR3(30.0f, 10.0f, 50.0f);
 
 	D3DXVECTOR4 lightPos = D3DXVECTOR4(0.0f, 20.0f, 0.0f, 1.0f);
-	D3DXVECTOR4 lightPos2 = D3DXVECTOR4(50.0f, 20.0f, 100.0f, 1.0f);
-	D3DXVECTOR4 lightPos3 = D3DXVECTOR4(-100.0f, 20.0f, 0.0f, 1.0f);
+	D3DXVECTOR4 lightPos2 = D3DXVECTOR4(0.0f, 20.0f, -150.0f, 1.0f);
+	D3DXVECTOR4 lightPos3 = D3DXVECTOR4(0.0f, 20.0f, -300.0f, 1.0f);
 	_pTeapot = new Mesh(_pd3dDevice, teapotPos, "teapot.x");
 	if( !(_pTeapot->Load("green.jpg")) )
 	{
@@ -187,17 +187,11 @@ void Environment::OnFrameMove(DWORD inTimeDelta)
 	_pInput->GetInputData();
 	_pMainCamera->UpdateCamera((float)(inTimeDelta / 1000.0f));
 
-	if (_lightPosition[0].x > 75 || _lightPosition[0].x < -75)
+	if (_pTeapot->GetPosition().x > 75 || _pTeapot->GetPosition().x < -75)
 	{
 		_lightMoveSpeed = -_lightMoveSpeed;
 	}
 	_pTeapot->Translate(_lightMoveSpeed,0,0);
-	_lightPosition[0].x += _lightMoveSpeed;
-
-	_lightPosition[1].z += _lightMoveSpeed;
-
-	_lightPosition[2].x += _lightMoveSpeed;
-	_lightPosition[2].z += _lightMoveSpeed;
 
 	_pShadowEffect->Effect->SetVectorArray(_pShadowEffect->LightPositionHandle, _lightPosition, 3);
 

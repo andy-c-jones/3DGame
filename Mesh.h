@@ -17,6 +17,8 @@ public:
 	bool Visible;
 	int timeSinceShot;
 
+	D3DXVECTOR3 GetPosition();
+
 	Mesh(IDirect3DDevice9* device, D3DXVECTOR3& position, std::string meshFileName);
 	~Mesh();
 

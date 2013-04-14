@@ -17,6 +17,11 @@ Mesh::~Mesh()
 {
 }
 
+D3DXVECTOR3 Mesh::GetPosition()
+{
+	return _position;
+}
+
 D3DXMATRIXA16* Mesh::GetWorldMat()
 {
 	return &_worldMatrix;
