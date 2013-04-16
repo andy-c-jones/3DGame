@@ -6,6 +6,7 @@ GameManager::GameManager(Input* userInput)
 	_input = userInput;
 	_mainGame = 0;
 	_gameMenu = 0;
+	_gameTime = 0;
 }
 
 
@@ -33,7 +34,7 @@ bool GameManager::Initialise(HWND hWnd, HINSTANCE instance, UINT screenWidth, UI
 
 }
 
-void GameManager::update(DWORD timeDelta, std::string fps)
+void GameManager::update(DWORD timeDelta, std::string fps, DWORD currentTime)
 {
 
 	bool RungameTemp = true;
@@ -56,8 +57,12 @@ void GameManager::update(DWORD timeDelta, std::string fps)
 				MessageBoxA(NULL, "Failed to initialise the Maingame.", NULL, MB_OK);
 			}
 			activeState = GAME;
+			_gameTime = currentTime;
 		}
 	}
+
+
+
 
 	if (activeState == MENU)
 	{
@@ -67,8 +72,16 @@ void GameManager::update(DWORD timeDelta, std::string fps)
 
 	if (activeState == GAME)
 	{
-		_mainGame->Update();
-		_mainGame->Render(timeDelta,fps);
+		if ( currentTime < _gameTime + 10000)
+		{
+			_mainGame->Update();
+			_mainGame->Render(timeDelta,fps);
+		}
+		else
+		{
+			PostQuitMessage(0);
+		}
 
 	}
+	
 }

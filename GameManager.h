@@ -11,7 +11,7 @@ public:
 	~GameManager(void);
 
 	bool Initialise(HWND hWnd, HINSTANCE instance, UINT screenWidth, UINT screenHeight, BOOL windowed);
-	void update(DWORD timeDelta, std::string fps);
+	void update(DWORD timeDelta, std::string fps,DWORD currentTime);
 	enum { MENU = 1, GAME = 2 };
 
 private:
@@ -24,6 +24,6 @@ private:
 	HINSTANCE _instance; 
 	UINT _screenWidth; 
 	UINT _screenHeight;
-
+	DWORD _gameTime;
 };
 

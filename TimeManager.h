@@ -29,6 +29,7 @@ public:
 	void UpdateCurrentTime();
 	void UpdateTimeDelta();
 	DWORD GetTimeDelta();
+	DWORD GetCurrentT();
 	
 	std::string GetFPS(DWORD inTimeDelta);
 

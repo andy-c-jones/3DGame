@@ -48,6 +48,11 @@ DWORD TimeManager::GetTimeDelta()
 	return _timeDelta;
 }
 
+DWORD TimeManager::GetCurrentT()
+{
+	return _currentTime;
+}
+
 std::string TimeManager::GetFPS(DWORD inTimeDelta)
 {
 	_frameCount++;
