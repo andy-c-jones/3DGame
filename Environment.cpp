@@ -167,7 +167,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		return false;
 	}
 
-	_pWall = new Mesh(_pd3dDevice, wallPos, "b.x");
+	_pWall = new Mesh(_pd3dDevice, wallPos, "NewWalld.x");
 	if( !(_pWall->Load("barell.tga")) )
 	{
 		MessageBoxA(NULL, "loading ground mesh failed.", "BOOM!", MB_OK);
