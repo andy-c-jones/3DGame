@@ -15,6 +15,8 @@ Environment::Environment(Input* input)
 	_pShadowEffect = NULL;
 
 	_pTeapot = NULL;
+	_pTeapot2 = NULL;
+	_pTeapot3 = NULL;
 	_pSphere = NULL;
 	_pGround = NULL;
 	_pCeiling = NULL;
@@ -133,6 +135,8 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 
 
 	D3DXVECTOR3 teapotPos = D3DXVECTOR3(0.0f, 0.0f, 30.0f);
+	D3DXVECTOR3 teapotPos2 = D3DXVECTOR3(0.0f, 20.0f, 30.0f);
+	D3DXVECTOR3 teapotPos3 = D3DXVECTOR3(0.0f, 40.0f, 30.0f);
 	D3DXVECTOR3 spherePos = D3DXVECTOR3(0.0f, 40.0f, 50.0f);
 	D3DXVECTOR3 groundPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 ceilingPos = D3DXVECTOR3(0.0f, 70.0f, 0.0f);
@@ -145,6 +149,18 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	if( !(_pTeapot->Load("green.jpg")) )
 	{
 		MessageBoxA(NULL, "loading teapot mesh failed.", "BOOM!", MB_OK);
+		return false;
+	}
+	_pTeapot2 = new Mesh(_pd3dDevice, teapotPos2, "teapot.x");
+	if( !(_pTeapot2->Load("green.jpg")) )
+	{
+		MessageBoxA(NULL, "loading teapot2 mesh failed.", "BOOM!", MB_OK);
+		return false;
+	}
+	_pTeapot3 = new Mesh(_pd3dDevice, teapotPos3, "teapot.x");
+	if( !(_pTeapot3->Load("green.jpg")) )
+	{
+		MessageBoxA(NULL, "loading teapot3 mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
 	_pSphere = new Mesh(_pd3dDevice, spherePos, "sphere.x");
@@ -171,6 +187,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	if( !(_pWall->Load("concrete.jpg")) )
 	{
 		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
+
 		return false;
 	}
 
@@ -192,6 +209,8 @@ void Environment::OnFrameMove(DWORD inTimeDelta)
 		_lightMoveSpeed = -_lightMoveSpeed;
 	}
 	_pTeapot->Translate(_lightMoveSpeed,0,0);
+	_pTeapot2->Translate(-_lightMoveSpeed,0,0);
+	_pTeapot3->Translate(_lightMoveSpeed,0,0);
 
 	_pShadowEffect->Effect->SetVectorArray(_pShadowEffect->LightPositionHandle, _lightPosition, 3);
 
@@ -243,9 +262,24 @@ void Environment::RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFac
 	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pTeapot->GetWorldMat());
 	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
 
+	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pTeapot2->GetWorldMat(), light->GetViewProjectionMatrix());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pTeapot2->GetWorldMat());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
+
+	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pTeapot3->GetWorldMat(), light->GetViewProjectionMatrix());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pTeapot3->GetWorldMat());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
 
 	_pShadowEffect->Effect->BeginPass(0);
 	_pTeapot->_pMesh->DrawSubset(0);
+	_pShadowEffect->Effect->EndPass();
+
+	_pShadowEffect->Effect->BeginPass(0);
+	_pTeapot2->_pMesh->DrawSubset(0);
+	_pShadowEffect->Effect->EndPass();
+
+	_pShadowEffect->Effect->BeginPass(0);
+	_pTeapot3->_pMesh->DrawSubset(0);
 	_pShadowEffect->Effect->EndPass();
 
 	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pSphere->GetWorldMat(), light->GetViewProjectionMatrix());
@@ -324,6 +358,26 @@ void Environment::RenderSceneWithShadowMap()
 		_pTeapot->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	}
 
+	if(_pTeapot2->timeSinceShot-- == 0)
+	{
+		_pTeapot2->Visible = true;
+	}
+	if(_pTeapot2->Visible)
+	{
+		_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pTeapot2->Texture);
+		_pTeapot2->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	}
+
+	if(_pTeapot3->timeSinceShot-- == 0)
+	{
+		_pTeapot3->Visible = true;
+	}
+	if(_pTeapot3->Visible)
+	{
+		_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pTeapot3->Texture);
+		_pTeapot3->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	}
+
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pCeiling->Texture);
 	_pCeiling->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pGround->Texture);
@@ -337,7 +391,6 @@ void Environment::RenderSceneWithShadowMap()
 
 void Environment::Update()
 {
-	//_pTeapot->Translate(
 	if(_pInput->IsLeftMouseButtonPressed())
 	{
 		BOOL hit = false;
@@ -358,6 +411,38 @@ void Environment::Update()
 				_score->IncrimentScore();
 				_pTeapot->Visible = false;
 				_pTeapot->timeSinceShot = 1000;
+			}
+		}
+
+		if(_pTeapot2->Visible)
+		{
+			D3DXMATRIXA16* world = _pTeapot2->GetWorldMat();
+			D3DXMatrixInverse(&inverseWorld, 0, world);
+			D3DXVec3TransformNormal(_translatedLook, _translatedLook, &inverseWorld);
+			D3DXVec3TransformCoord(_translatedPos, _translatedPos, &inverseWorld);
+			D3DXIntersect(_pTeapot2->_pMesh, _translatedPos, _translatedLook, &hit, NULL, NULL, NULL,NULL,NULL,NULL);
+
+			if(hit == 1)
+			{
+				_score->IncrimentScore();
+				_pTeapot2->Visible = false;
+				_pTeapot2->timeSinceShot = 1000;
+			}
+		}
+
+		if(_pTeapot3->Visible)
+		{
+			D3DXMATRIXA16* world = _pTeapot3->GetWorldMat();
+			D3DXMatrixInverse(&inverseWorld, 0, world);
+			D3DXVec3TransformNormal(_translatedLook, _translatedLook, &inverseWorld);
+			D3DXVec3TransformCoord(_translatedPos, _translatedPos, &inverseWorld);
+			D3DXIntersect(_pTeapot3->_pMesh, _translatedPos, _translatedLook, &hit, NULL, NULL, NULL,NULL,NULL,NULL);
+
+			if(hit == 1)
+			{
+				_score->IncrimentScore();
+				_pTeapot3->Visible = false;
+				_pTeapot3->timeSinceShot = 1000;
 			}
 		}
 	}
@@ -445,12 +530,23 @@ void Environment::CleanUp()
 		delete _pShadowEffect;
 		_pShadowEffect = NULL;
 	}
-
 	if( _pTeapot != NULL )
 	{
 		_pTeapot->CleanUp();
 		delete _pTeapot;
 		_pTeapot = NULL;
+	}
+	if( _pTeapot2 != NULL )
+	{
+		_pTeapot2->CleanUp();
+		delete _pTeapot2;
+		_pTeapot2 = NULL;
+	}
+	if( _pTeapot3 != NULL )
+	{
+		_pTeapot3->CleanUp();
+		delete _pTeapot3;
+		_pTeapot3 = NULL;
 	}
 	if( _pSphere != NULL )
 	{

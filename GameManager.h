@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "Menu.h"
 #include "Environment.h"
+#include "EndMenu.h"
 
 class GameManager
 {
@@ -16,6 +17,7 @@ public:
 
 private:
 
+	
 	Environment* _mainGame;
 	Menu* _gameMenu;
 	Input* _input;
@@ -25,5 +27,7 @@ private:
 	UINT _screenWidth; 
 	UINT _screenHeight;
 	DWORD _gameTime;
+
+	
 };
 

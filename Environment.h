@@ -21,6 +21,8 @@ class Environment
 	D3DXVECTOR4 _lightPosition[3];
 
 	Mesh* _pTeapot;
+	Mesh* _pTeapot2;
+	Mesh* _pTeapot3;
 	Mesh* _pSphere;
 	Mesh* _pGround;
 	Mesh* _pCeiling;
