@@ -20,7 +20,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuImages.cpp" />
     <ClCompile Include="MenuSprites.cpp" />
-    <ClCompile Include="EndMenu.cpp" />
+    <ClCompile Include="EndHighscores.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -66,7 +66,7 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="MenuSprites.h" />
-    <ClInclude Include="EndMenu.h">
+    <ClInclude Include="EndHighscores.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

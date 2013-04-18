@@ -9,7 +9,7 @@ Menu::Menu(void)
 	_newGameHigh = 0;
 	_exitGame = 0;
 	_exitGameHigh = 0;
-	_count = 0;
+	_count = 100;
 	_testSprite = 0;
 }
 
@@ -116,10 +116,11 @@ bool Menu::IntializeDirectx(HWND hwnd, int width, int height, bool fullscreen)
 
 void Menu::update()
 {
-	_userInput->GetInputData();
+	
 
 	if (_count == 0)
 	{
+		_userInput->GetInputData();
 		if (_userInput->IsWPressed() || _userInput->IsSPressed())
 		{
 			if (_menuItemSelected == 0)

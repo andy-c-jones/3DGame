@@ -3,7 +3,7 @@
 #include "Input.h"
 #include "Menu.h"
 #include "Environment.h"
-#include "EndMenu.h"
+#include "EndHighscores.h"
 
 class GameManager
 {
@@ -20,6 +20,7 @@ private:
 	
 	Environment* _mainGame;
 	Menu* _gameMenu;
+	EndHighscores* _endMenu;
 	Input* _input;
 	int activeState;
 	HWND _hWnd; 

@@ -90,7 +90,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="EndMenu.cpp" />
+    <ClCompile Include="EndHighscores.cpp" />
     <ClCompile Include="Environment.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -109,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="EndMenu.h" />
+    <ClInclude Include="EndHighscores.h" />
     <ClInclude Include="Environment.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Light.h" />

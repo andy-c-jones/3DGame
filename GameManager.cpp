@@ -7,6 +7,7 @@ GameManager::GameManager(Input* userInput)
 	_mainGame = 0;
 	_gameMenu = 0;
 	_gameTime = 0;
+	_endMenu = 0;
 }
 
 
@@ -41,6 +42,7 @@ void GameManager::update(DWORD timeDelta, std::string fps, DWORD currentTime)
 
 	if (activeState == MENU)
 	{
+		
 		_gameMenu->update();
 
 		if(_gameMenu->getState() == Menu::EXIT)
@@ -61,6 +63,23 @@ void GameManager::update(DWORD timeDelta, std::string fps, DWORD currentTime)
 		}
 	}
 
+	if (activeState == ENDSCORE)
+	{
+		
+		_endMenu->update();
+
+		if(_endMenu->getState() == EndHighscores::EXIT)
+		{
+			PostQuitMessage(0);
+		}
+
+		if ((_endMenu->getState() == EndHighscores::MAIN_MENU))
+		{
+			
+			activeState = MENU;
+			
+		}
+	}
 
 
 
@@ -79,10 +98,22 @@ void GameManager::update(DWORD timeDelta, std::string fps, DWORD currentTime)
 		}
 		else
 		{
+			_endMenu = new EndHighscores();
+			if( !(_endMenu->Intialize(_input,_hWnd,_screenWidth,_screenHeight)) )
+			{
+				MessageBoxA(NULL, "Failed to initialise the Menu.", NULL, MB_OK);
+				
+			}
 			_gameMenu->ResetMenu();
-			activeState = MENU;
+			activeState = ENDSCORE;
 		}
 
+	}
+
+	if (activeState == ENDSCORE)
+	{
+		
+		_endMenu->render();
 	}
 	
 }
