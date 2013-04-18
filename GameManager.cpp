@@ -79,7 +79,8 @@ void GameManager::update(DWORD timeDelta, std::string fps, DWORD currentTime)
 		}
 		else
 		{
-			PostQuitMessage(0);
+			_gameMenu->ResetMenu();
+			activeState = MENU;
 		}
 
 	}

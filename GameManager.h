@@ -12,7 +12,7 @@ public:
 
 	bool Initialise(HWND hWnd, HINSTANCE instance, UINT screenWidth, UINT screenHeight, BOOL windowed);
 	void update(DWORD timeDelta, std::string fps,DWORD currentTime);
-	enum { MENU = 1, GAME = 2 };
+	enum { MENU = 1, GAME = 2, ENDSCORE = 3 };
 
 private:
 

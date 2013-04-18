@@ -3,20 +3,22 @@
 #include "Input.h"
 #include "d3dx9.h"
 #include "MenuImages.h"
-#include "MenuSprites.h"
 
-class Menu
+
+class EndMenu
 {
+
+
 public:
-	Menu();
-	~Menu();
+	EndMenu();
+	~EndMenu();
 
 	bool Intialize(Input* input, HWND hwnd, int width, int height);
 	void update();
 	void render();
 	int getState();
 
-	enum{NEW_GAME = 1, EXIT = 2};
+	enum{MAIN_MENU = 1, EXIT = 2};
 
 	void CleanUp();
 	void ResetMenu();
@@ -25,11 +27,11 @@ private:
 
 	Input* _userInput;
 	MenuImages* _background;
-	MenuImages* _newGame;
-	MenuImages* _newGameHigh;
+	MenuImages* _mainMenu;
+	MenuImages* _mainMenuHigh;
 	MenuImages* _exitGame;
 	MenuImages* _exitGameHigh;
-	MenuSprites* _testSprite;
+	
 
 	int _menuItemSelected;
 	int _state;
@@ -37,7 +39,7 @@ private:
 
 	bool IntializeDirectx(HWND hwnd, int width, int height, bool fullscreen);
 
-	LPDIRECT3D9             direct3d; //This is the Direct3D object
-	LPDIRECT3DDEVICE9       direct3dDevice; //This is our device object
+	LPDIRECT3D9             _direct3d; //This is the Direct3D object
+	LPDIRECT3DDEVICE9       _direct3dDevice; //This is our device object
 };
 

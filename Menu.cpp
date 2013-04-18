@@ -194,6 +194,11 @@ int Menu::getState()
 
 }
 
+void Menu::ResetMenu()
+{
+	_state = 0;
+}
+
 
 void Menu::CleanUp()
 {

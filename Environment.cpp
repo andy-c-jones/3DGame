@@ -167,10 +167,10 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		return false;
 	}
 
-	_pWall = new Mesh(_pd3dDevice, wallPos, "NewWalld.x");
-	if( !(_pWall->Load("barell.tga")) )
+	_pWall = new Mesh(_pd3dDevice, wallPos, "NewWall.x");
+	if( !(_pWall->Load("concrete.jpg")) )
 	{
-		MessageBoxA(NULL, "loading ground mesh failed.", "BOOM!", MB_OK);
+		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
 		return false;
 	}
 
@@ -490,5 +490,11 @@ void Environment::CleanUp()
 	{
 		delete _translatedLook;
 		_translatedLook = NULL;
+	}
+
+	if(_textFont != NULL)
+	{
+		delete _textFont;
+		_textFont = NULL;
 	}
 }
