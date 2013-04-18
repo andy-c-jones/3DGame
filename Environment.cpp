@@ -35,7 +35,7 @@ Environment::Environment(Input* input)
 	_fontPosition.right = 200;
 	_fontPosition.bottom = 200;
 	_pInput = input;
-
+	_reloaded = 100;
 	_translatedLook = NULL;
 	_translatedPos = NULL;
 }
@@ -391,8 +391,15 @@ void Environment::RenderSceneWithShadowMap()
 
 void Environment::Update()
 {
-	if(_pInput->IsLeftMouseButtonPressed())
+	if (_reloaded > 0)
 	{
+		_reloaded--;
+	}
+
+	if(_pInput->IsLeftMouseButtonPressed() && _reloaded == 0)
+	{
+		_reloaded = 600;
+		PlaySound("cannon1.wav", NULL, SND_ASYNC);
 		BOOL hit = false;
 		_translatedLook = _pMainCamera->GetLook();
 		_translatedPos = new D3DXVECTOR3(_pMainCamera->GetPosition()->x, _pMainCamera->GetPosition()->y, _pMainCamera->GetPosition()->z);
@@ -408,6 +415,7 @@ void Environment::Update()
 
 			if(hit == 1)
 			{
+				PlaySound("Kachink.wav", NULL, SND_ASYNC);
 				_score->IncrimentScore();
 				_pTeapot->Visible = false;
 				_pTeapot->timeSinceShot = 1000;
@@ -424,6 +432,7 @@ void Environment::Update()
 
 			if(hit == 1)
 			{
+				PlaySound("Kachink.wav", NULL, SND_ASYNC);
 				_score->IncrimentScore();
 				_pTeapot2->Visible = false;
 				_pTeapot2->timeSinceShot = 1000;
@@ -440,6 +449,7 @@ void Environment::Update()
 
 			if(hit == 1)
 			{
+				PlaySound("Kachink.wav", NULL, SND_ASYNC);
 				_score->IncrimentScore();
 				_pTeapot3->Visible = false;
 				_pTeapot3->timeSinceShot = 1000;

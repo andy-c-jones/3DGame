@@ -41,7 +41,7 @@ class Environment
 	MenuImages* _crosshair;
 	MenuSprites* _crossHair;
 
-
+	int _reloaded;
 	float _lightMoveSpeed;
 
 	bool InitialiseDirectX(HWND hWnd, UINT screenWidth, UINT screenHeight, BOOL windowed);
