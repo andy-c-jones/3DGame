@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "d3dx9.h"
 #include "MenuImages.h"
+#include "Text.h"
 
 
 class EndHighscores
@@ -13,7 +14,7 @@ public:
 
 	bool Intialize(Input* input, HWND hwnd, int width, int height);
 	void update();
-	void render();
+	void render(char* score);
 	int getState();
 
 	enum{MAIN_MENU = 1, EXIT = 2};
@@ -34,6 +35,7 @@ private:
 	int _menuItemSelected;
 	int _state;
 	int _count;
+	Text* _textFont;
 
 	bool IntializeDirectx(HWND hwnd, int width, int height, bool fullscreen);
 

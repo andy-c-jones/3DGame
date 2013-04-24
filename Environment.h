@@ -51,6 +51,8 @@ class Environment
 	void RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFaceSurface);
 	void FillCubicShadowMap(Light* light);
 	void RenderSceneWithShadowMap();
+
+
 public:
 	Environment(Input* input);
 	~Environment();
@@ -59,4 +61,6 @@ public:
 	void Update();
 	void Render(DWORD timeDelta, std::string fps);
 	void CleanUp();
+	char* getScore();
+
 };

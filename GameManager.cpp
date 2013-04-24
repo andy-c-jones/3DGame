@@ -115,7 +115,7 @@ void GameManager::update(DWORD timeDelta, std::string fps, DWORD currentTime)
 	if (activeState == ENDSCORE)
 	{
 		
-		_endMenu->render();
+		_endMenu->render(_mainGame->getScore());
 	}
 	
 }

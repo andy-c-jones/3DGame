@@ -488,6 +488,11 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 	_pd3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 
+char* Environment::getScore()
+{
+	return _score->GetScore();
+}
+
 void Environment::CleanUp()
 {
 	if( _pD3D != NULL )

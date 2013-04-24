@@ -11,6 +11,7 @@ EndHighscores::EndHighscores()
 	_exitGame = 0;
 	_exitGameHigh = 0;
 	_count = 0;
+	_textFont = NULL;
 }
 
 
@@ -32,6 +33,9 @@ bool EndHighscores::Intialize(Input* input,HWND hwnd, int width, int height)
 	_menuItemSelected = 0;
 	_state = 0;
 
+	_textFont = new Text;
+
+	_textFont->Initialize(_direct3dDevice);
 
 	_background = new MenuImages;
 	_background->LoadSurface(_direct3dDevice, "BackTest.jpg");
@@ -141,7 +145,7 @@ void EndHighscores::update()
 }
 
 
-void EndHighscores::render()
+void EndHighscores::render(char* score)
 {
 	if ( NULL == _direct3dDevice)
 		return;
@@ -157,6 +161,8 @@ void EndHighscores::render()
 	_direct3dDevice->BeginScene();
 
 	_background->render(_direct3dDevice);
+
+	_textFont->Print(score,40,100,0xffffffff,NULL);
 
 	if (_menuItemSelected == 0){
 		_mainMenuHigh->render(_direct3dDevice);
