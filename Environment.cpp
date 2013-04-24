@@ -139,7 +139,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR3 teapotPos3 = D3DXVECTOR3(0.0f, 40.0f, 30.0f);
 	D3DXVECTOR3 spherePos = D3DXVECTOR3(0.0f, 40.0f, 50.0f);
 	D3DXVECTOR3 groundPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	D3DXVECTOR3 ceilingPos = D3DXVECTOR3(0.0f, 70.0f, 0.0f);
+	D3DXVECTOR3 ceilingPos = D3DXVECTOR3(0.0f, -40.0f, -40.0f);
 	D3DXVECTOR3 wallPos = D3DXVECTOR3(30.0f, 10.0f, 50.0f);
 
 	D3DXVECTOR4 lightPos = D3DXVECTOR4(0.0f, 20.0f, 0.0f, 1.0f);
@@ -169,8 +169,8 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		MessageBoxA(NULL, "loading sphere mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
-	_pCeiling = new Mesh(_pd3dDevice, ceilingPos, "roof.x");
-	if( !(_pCeiling->Load("concrete.jpg")) )
+	_pCeiling = new Mesh(_pd3dDevice, ceilingPos, "WareHouse.x");
+	if( !(_pCeiling->Load("workingwarehousetexture.png")) )
 	{
 		MessageBoxA(NULL, "loading ceiling mesh failed.", "BOOM!", MB_OK);
 		return false;
@@ -476,7 +476,7 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 
 		_textFont->Print("Highscore: ",40,20,0xffffffff,NULL);
 		
-		_textFont->Print(_score->GetScore(),40,100,0xffffffff,NULL);
+		_textFont->Print(_score->GetScore(),40,100,0xffffffff,NULL); 
 
 		free(text);
 
