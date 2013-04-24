@@ -127,6 +127,8 @@ int Input::IsEnterPressed()
 	return KEYDOWN(_keyBuffer, DIK_RETURN);
 }
 
+
+
 bool Input::IsLeftMouseButtonPressed()
 {
 	if(_mouseState.rgbButtons[0] & 0x80)

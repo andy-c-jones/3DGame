@@ -75,8 +75,10 @@ void GameManager::update(DWORD timeDelta, std::string fps, DWORD currentTime)
 
 		if ((_endMenu->getState() == EndHighscores::MAIN_MENU))
 		{
-			
-			activeState = MENU;
+			if (!_input->IsEnterPressed())
+			{
+				activeState = MENU;
+			}
 			
 		}
 	}
