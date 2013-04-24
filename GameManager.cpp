@@ -93,7 +93,7 @@ void GameManager::update(DWORD timeDelta, std::string fps, DWORD currentTime)
 
 	if (activeState == GAME)
 	{
-		if ( currentTime < _gameTime + 10000)
+		if ( currentTime < _gameTime + 30000)
 		{
 			_mainGame->Update();
 			_mainGame->Render(timeDelta,fps);

@@ -112,7 +112,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	_crosshair->setPosition(487,359);
 
 	_crossHair = new MenuSprites;
-	_crossHair->loadSprite(_pd3dDevice,"crosshair.jpg",hWnd);
+	_crossHair->loadSprite(_pd3dDevice,"crosshair.png",hWnd);
 	_crossHair->setSize(50,50);
 	_crossHair->setPosition(487,359);
 
@@ -157,8 +157,8 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		MessageBoxA(NULL, "loading teapot2 mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
-	_pTeapot3 = new Mesh(_pd3dDevice, teapotPos3, "teapot.x");
-	if( !(_pTeapot3->Load("green.jpg")) )
+	_pTeapot3 = new Mesh(_pd3dDevice, teapotPos3, "Barrel2.x");
+	if( !(_pTeapot3->Load("barrel2Dif.png")) )
 	{
 		MessageBoxA(NULL, "loading teapot3 mesh failed.", "BOOM!", MB_OK);
 		return false;
