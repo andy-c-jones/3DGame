@@ -59,7 +59,7 @@ public:
 
 	bool Initialise(HWND hWnd, HINSTANCE instance, UINT screenWidth, UINT screenHeight, BOOL windowed);
 	void Update();
-	void Render(DWORD timeDelta, std::string fps);
+	void Render(DWORD timeDelta, std::string fps,std::string countdown);
 	void CleanUp();
 	char* getScore();
 

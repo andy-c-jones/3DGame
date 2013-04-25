@@ -21,6 +21,7 @@
     <ClCompile Include="MenuImages.cpp" />
     <ClCompile Include="MenuSprites.cpp" />
     <ClCompile Include="EndHighscores.cpp" />
+    <ClCompile Include="TimeCounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -67,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="MenuSprites.h" />
     <ClInclude Include="EndHighscores.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeCounter.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

@@ -459,7 +459,7 @@ void Environment::Update()
 }
 
 
-void Environment::Render(DWORD inTimeDelta, std::string fps)
+void Environment::Render(DWORD inTimeDelta, std::string fps,std::string countDown)
 {
 	OnFrameMove(inTimeDelta);
 	
@@ -471,6 +471,7 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 		}
 		RenderSceneWithShadowMap();
 		char* text = strdup(fps.c_str());
+		char* text2 = strdup(countDown.c_str());
 
 		_textFont->Print(text,20,20,0xffffffff,NULL);
 
@@ -478,7 +479,10 @@ void Environment::Render(DWORD inTimeDelta, std::string fps)
 		
 		_textFont->Print(_score->GetScore(),40,100,0xffffffff,NULL); 
 
+		_textFont->Print(text2,60,20,0xffffffff,NULL); 
+
 		free(text);
+		free(text2);
 
 		//_crosshair->render(_pd3dDevice);
 		_crossHair->render(_pd3dDevice,200);

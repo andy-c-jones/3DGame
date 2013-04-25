@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "Environment.h"
 #include "EndHighscores.h"
+#include "TimeCounter.h"
 
 class GameManager
 {
@@ -28,6 +29,8 @@ private:
 	UINT _screenWidth; 
 	UINT _screenHeight;
 	DWORD _gameTime;
+	DWORD _DecrimentTime;
+	TimeCounter* _timeCountDown;
 
 	
 };
