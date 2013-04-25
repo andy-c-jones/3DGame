@@ -43,7 +43,7 @@ class Environment
 
 	int _reloaded;
 	float _lightMoveSpeed;
-
+	float _lightYMoveSpeed;
 	bool InitialiseDirectX(HWND hWnd, UINT screenWidth, UINT screenHeight, BOOL windowed);
 	
 	void OnFrameMove(DWORD timeDelta);

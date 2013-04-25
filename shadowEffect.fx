@@ -5,14 +5,14 @@ textureCUBE cubeShadowMap2;
 textureCUBE cubeShadowMap3; 
 Texture2D materialTexture;
 
-const float4 materialAmbient = float4(0.9f, 0.9f, 0.9f, 1.0f);  
+const float4 materialAmbient = float4(0.5f, 0.5f, 0.5f, 1.0f);  
 const float4 materialDiffuse = float4(1.0f, 1.0f, 1.0f, 1.0f);
 const float4 materialSpecular = float4(1.0f, 1.0f, 1.0f, 1.0f);
 const float4 globalAmbient = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
-const float4 lightDiffuse = float4(1.0f, 0.7f, 0.7f, 1.0f);
-const float4 lightDiffuse2 = float4(0.7f, 1.0f, 0.7f, 1.0f);
-const float4 lightDiffuse3 = float4(0.7f, 0.7f, 1.0f, 1.0f);
+const float4 lightDiffuse = float4(1.0f, 1.0f, 0.6f, 1.0f);
+const float4 lightDiffuse2 = float4(1.0f, 1.0f, 0.8f, 1.0f);
+const float4 lightDiffuse3 = float4(1.0f, 1.0f, 0.7f, 1.0f);
 const float4 lightSpecular = float4(0.3f, 0.3f, 0.3f, 1.0f);
 const float4 lightAttenuation = float4(0.0f, 0.03f, 0.0f, 1.0f);
 
@@ -186,7 +186,7 @@ float4 cubicShadowMapping_PS(VS_OUTPUT In) : COLOR0
 	for(int i = 0; i < NUMBER_OF_LIGHTS; i++)
 	{
 		tempDiffuse = materialDiffuse * lightResult.diffuseResult[i];
-		diffuse += tempDiffuse / NUMBER_OF_LIGHTS;
+		diffuse += tempDiffuse ;/// NUMBER_OF_LIGHTS;
 	}
 
 	float4 specular = float4(0,0,0,0);
@@ -199,6 +199,7 @@ float4 cubicShadowMapping_PS(VS_OUTPUT In) : COLOR0
 
 	float4 textureColor = tex2D(textureSampler, In.tex);
 	textureColor.a = 1;
+	textureColor = textureColor / NUMBER_OF_LIGHTS;
     float4 lightingColour = textureColor + (ambient * (diffuse + specular));
     
     return saturate(lightingColour);
