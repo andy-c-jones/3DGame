@@ -11,6 +11,7 @@ TimeManager::TimeManager()
 
 	_fps = 0.0;
 	_pCharBuffer = new char[16];
+	
 }
 
 TimeManager::~TimeManager()

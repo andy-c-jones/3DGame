@@ -105,6 +105,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="ShadowEffect.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="TimeCounter.cpp" />
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ShadowEffect.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="TimeCounter.h" />
     <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>
