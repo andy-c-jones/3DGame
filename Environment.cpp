@@ -141,13 +141,13 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR3 spherePos = D3DXVECTOR3(-150.0f, 5.0f, -250.0f);
 	D3DXVECTOR3 groundPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 ceilingPos = D3DXVECTOR3(0.0f, -40.0f, -80.0f);
-	D3DXVECTOR3 wallPos = D3DXVECTOR3(30.0f, -15.0f, -230.0f);
+	D3DXVECTOR3 wallPos = D3DXVECTOR3(30.0f, -7.0f, -230.0f);
 
 	D3DXVECTOR4 lightPos = D3DXVECTOR4(0.0f, 20.0f, 30.0f, 1.0f);
 	D3DXVECTOR4 lightPos2 = D3DXVECTOR4(0.0f, 20.0f, -65.0f, 1.0f);
 	D3DXVECTOR4 lightPos3 = D3DXVECTOR4(0.0f, 20.0f, -160.0f, 1.0f);
-	_pTeapot = new Mesh(_pd3dDevice, teapotPos, "teapot.x");
-	if( !(_pTeapot->Load("green.jpg")) )
+	_pTeapot = new Mesh(_pd3dDevice, teapotPos, "target.x");
+	if( !(_pTeapot->Load("aim.bmp")) )
 	{
 		MessageBoxA(NULL, "loading teapot mesh failed.", "BOOM!", MB_OK);
 		return false;
@@ -184,8 +184,8 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		return false;
 	}
 
-	_pWall = new Mesh(_pd3dDevice, wallPos, "NewWall.x");
-	if( !(_pWall->Load("green.jpg")) )
+	_pWall = new Mesh(_pd3dDevice, wallPos, "sandbags.x");
+	if( !(_pWall->Load("sandbags_d.jpg")) )
 	{
 		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
 
