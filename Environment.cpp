@@ -63,7 +63,7 @@ bool Environment::InitialiseDirectX( HWND hWnd, UINT screenWidth, UINT screenHei
 	d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8;
 	d3dpp.EnableAutoDepthStencil = true;
 	d3dpp.AutoDepthStencilFormat = D3DFMT_D24X8;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;//D3DSWAPEFFECT_FLIP;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 	int VP = 0;
 	D3DCAPS9 caps;
@@ -185,7 +185,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	}
 
 	_pWall = new Mesh(_pd3dDevice, wallPos, "NewWall.x");
-	if( !(_pWall->Load("concrete.jpg")) )
+	if( !(_pWall->Load("green.jpg")) )
 	{
 		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
 
