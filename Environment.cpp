@@ -164,8 +164,8 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		MessageBoxA(NULL, "loading teapot3 mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
-	_pSphere = new Mesh(_pd3dDevice, spherePos, "sphere.x");
-	if( !(_pSphere->Load("concrete.jpg")) )
+	_pSphere = new Mesh(_pd3dDevice, spherePos, "Ammo.x");
+	if( !(_pSphere->Load("holder1.jpg")) )
 	{
 		MessageBoxA(NULL, "loading sphere mesh failed.", "BOOM!", MB_OK);
 		return false;
