@@ -137,7 +137,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 
 	D3DXVECTOR3 teapotPos = D3DXVECTOR3(0.0f, 0.0f, 80.0f);
 	D3DXVECTOR3 teapotPos2 = D3DXVECTOR3(90.0f, 0.0f, -160.0f);
-	D3DXVECTOR3 teapotPos3 = D3DXVECTOR3(-110.0f, -10.0f, -60.0f);
+	D3DXVECTOR3 teapotPos3 = D3DXVECTOR3(-110.0f, 0.0f, -60.0f);
 	D3DXVECTOR3 spherePos = D3DXVECTOR3(-150.0f, 5.0f, -250.0f);
 	D3DXVECTOR3 groundPos = D3DXVECTOR3(0.0f, 0.0f, -60.0f);
 	D3DXVECTOR3 ceilingPos = D3DXVECTOR3(0.0f, -40.0f, -80.0f);
@@ -158,7 +158,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		MessageBoxA(NULL, "loading teapot2 mesh failed.", "BOOM!", MB_OK);
 		return false;
 	}
-	_pTeapot3 = new Mesh(_pd3dDevice, teapotPos3, "Barrel2.x");
+	_pTeapot3 = new Mesh(_pd3dDevice, teapotPos3, "Barrels.x");
 	if( !(_pTeapot3->Load("barrel2Dif.png")) )
 	{
 		MessageBoxA(NULL, "loading teapot3 mesh failed.", "BOOM!", MB_OK);
