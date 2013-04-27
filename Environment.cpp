@@ -21,6 +21,8 @@ Environment::Environment(Input* input)
 	_pGround = NULL;
 	_pCeiling = NULL;
 	_pShelve = NULL;
+	_pCargo = NULL;
+	_pPallets = NULL;
 
 	_lightMoveSpeed = 0.08f;
 	_lightYMoveSpeed = 0.05f;
@@ -139,10 +141,12 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR3 teapotPos = D3DXVECTOR3(0.0f, 0.0f, 80.0f);
 	D3DXVECTOR3 teapotPos2 = D3DXVECTOR3(90.0f, 0.0f, -160.0f);
 	D3DXVECTOR3 teapotPos3 = D3DXVECTOR3(-110.0f, 0.0f, -60.0f);
+	D3DXVECTOR3 cargoPos = D3DXVECTOR3(-110.0f, 0.0f, 10.0f);
 	D3DXVECTOR3 spherePos = D3DXVECTOR3(-150.0f, 0.0f, -150.0f);
 	D3DXVECTOR3 groundPos = D3DXVECTOR3(0.0f, 0.0f, -60.0f);
 	D3DXVECTOR3 ceilingPos = D3DXVECTOR3(0.0f, -40.0f, -80.0f);
 	D3DXVECTOR3 wallPos = D3DXVECTOR3(-4.0f, -7.0f, -230.0f);
+	D3DXVECTOR3 palletPos = D3DXVECTOR3(-4.0f, 0.0f, -125.0f);
 	D3DXVECTOR3 shelvePos = D3DXVECTOR3(110.0f, 0.0f, -60.0f);
 
 	D3DXVECTOR4 lightPos = D3DXVECTOR4(0.0f, 20.0f, 30.0f, 1.0f);
@@ -196,6 +200,22 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 
 	_pShelve = new Mesh(_pd3dDevice, shelvePos, "Twoshelves.x");
 	if( !(_pShelve->Load("rimrack.jpg")) )
+	{
+		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
+
+		return false;
+	}
+
+	_pCargo = new Mesh(_pd3dDevice, cargoPos, "cargo.x");
+	if( !(_pCargo->Load("Cargo01_D.jpg")) )
+	{
+		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
+
+		return false;
+	}
+
+	_pPallets = new Mesh(_pd3dDevice, palletPos, "Pallet.x");
+	if( !(_pPallets->Load("PalletsClr.jpg")) )
 	{
 		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
 
@@ -310,6 +330,22 @@ void Environment::RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFac
 	_pShadowEffect->Effect->BeginPass(0);
 	_pShelve->_pMesh->DrawSubset(0);
 	_pShadowEffect->Effect->EndPass();
+
+	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pCargo->GetWorldMat(), light->GetViewProjectionMatrix());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pCargo->GetWorldMat());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
+
+	_pShadowEffect->Effect->BeginPass(0);
+	_pCargo->_pMesh->DrawSubset(0);
+	_pShadowEffect->Effect->EndPass();
+
+	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pPallets->GetWorldMat(), light->GetViewProjectionMatrix());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pPallets->GetWorldMat());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
+
+	_pShadowEffect->Effect->BeginPass(0);
+	_pPallets->_pMesh->DrawSubset(0);
+	_pShadowEffect->Effect->EndPass();
 }
 
 void Environment::FillCubicShadowMap(Light* light)
@@ -393,6 +429,10 @@ void Environment::RenderSceneWithShadowMap()
 	_pWall->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pShelve->Texture);
 	_pShelve->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pCargo->Texture);
+	_pCargo->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pPallets->Texture);
+	_pPallets->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->End();
 
 	_pShadowEffect->Effect->SetTechnique(_pShadowEffect->AmbientHandle);

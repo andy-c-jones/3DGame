@@ -28,6 +28,8 @@ class Environment
 	Mesh* _pCeiling;
 	Mesh* _pWall;
 	Mesh* _pShelve;
+	Mesh* _pCargo;
+	Mesh* _pPallets;
 
 	D3DXVECTOR3* _translatedLook;
 	D3DXVECTOR3* _translatedPos;
