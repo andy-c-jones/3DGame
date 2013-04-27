@@ -27,6 +27,7 @@ class Environment
 	Mesh* _pGround;
 	Mesh* _pCeiling;
 	Mesh* _pWall;
+	Mesh* _pShelve;
 
 	D3DXVECTOR3* _translatedLook;
 	D3DXVECTOR3* _translatedPos;

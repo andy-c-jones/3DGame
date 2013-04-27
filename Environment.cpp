@@ -20,6 +20,7 @@ Environment::Environment(Input* input)
 	_pSphere = NULL;
 	_pGround = NULL;
 	_pCeiling = NULL;
+	_pShelve = NULL;
 
 	_lightMoveSpeed = 0.08f;
 	_lightYMoveSpeed = 0.05f;
@@ -142,6 +143,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR3 groundPos = D3DXVECTOR3(0.0f, 0.0f, -60.0f);
 	D3DXVECTOR3 ceilingPos = D3DXVECTOR3(0.0f, -40.0f, -80.0f);
 	D3DXVECTOR3 wallPos = D3DXVECTOR3(-4.0f, -7.0f, -230.0f);
+	D3DXVECTOR3 shelvePos = D3DXVECTOR3(110.0f, 0.0f, -60.0f);
 
 	D3DXVECTOR4 lightPos = D3DXVECTOR4(0.0f, 20.0f, 30.0f, 1.0f);
 	D3DXVECTOR4 lightPos2 = D3DXVECTOR4(0.0f, 20.0f, -65.0f, 1.0f);
@@ -186,6 +188,14 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 
 	_pWall = new Mesh(_pd3dDevice, wallPos, "sandbags.x");
 	if( !(_pWall->Load("sandbags_d.jpg")) )
+	{
+		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
+
+		return false;
+	}
+
+	_pShelve = new Mesh(_pd3dDevice, shelvePos, "Twoshelves.x");
+	if( !(_pShelve->Load("rimrack.jpg")) )
 	{
 		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
 
@@ -292,6 +302,14 @@ void Environment::RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFac
 	_pShadowEffect->Effect->BeginPass(0);
 	_pSphere->_pMesh->DrawSubset(0);
 	_pShadowEffect->Effect->EndPass();
+
+	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pShelve->GetWorldMat(), light->GetViewProjectionMatrix());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pShelve->GetWorldMat());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
+
+	_pShadowEffect->Effect->BeginPass(0);
+	_pShelve->_pMesh->DrawSubset(0);
+	_pShadowEffect->Effect->EndPass();
 }
 
 void Environment::FillCubicShadowMap(Light* light)
@@ -373,6 +391,8 @@ void Environment::RenderSceneWithShadowMap()
 	_pGround->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pWall->Texture);
 	_pWall->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pShelve->Texture);
+	_pShelve->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->End();
 
 	_pShadowEffect->Effect->SetTechnique(_pShadowEffect->AmbientHandle);
@@ -546,6 +566,14 @@ void Environment::CleanUp()
 		delete _pCeiling;
 		_pCeiling = NULL;
 	}
+
+	if( _pShelve != NULL )
+	{
+		_pShelve->CleanUp();
+		delete _pShelve;
+		_pShelve = NULL;
+	}
+
 	if(_font != NULL)
 	{
 		_font->Release();
