@@ -24,6 +24,7 @@ Environment::Environment(Input* input)
 	_pCargo = NULL;
 	_pPallets = NULL;
 	_pBackWall = NULL;
+	_pDrums = NULL;
 
 	_lightMoveSpeed = 0.08f;
 	_lightYMoveSpeed = 0.05f;
@@ -149,6 +150,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 	D3DXVECTOR3 wallPos = D3DXVECTOR3(-4.0f, -7.0f, -230.0f);
 	D3DXVECTOR3 backWallPos = D3DXVECTOR3(-20.0f, 0.0f, -275.0f);
 	D3DXVECTOR3 palletPos = D3DXVECTOR3(-4.0f, 0.0f, -120.0f);
+	D3DXVECTOR3 drumPos = D3DXVECTOR3(-40.0f, 0.0f, -140.0f);
 	D3DXVECTOR3 shelvePos = D3DXVECTOR3(110.0f, 0.0f, -60.0f);
 
 	D3DXVECTOR4 lightPos = D3DXVECTOR4(0.0f, 20.0f, 30.0f, 1.0f);
@@ -218,6 +220,14 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 
 	_pPallets = new Mesh(_pd3dDevice, palletPos, "Pallet.x");
 	if( !(_pPallets->Load("PalletsClr.jpg")) )
+	{
+		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
+
+		return false;
+	}
+
+	_pDrums = new Mesh(_pd3dDevice, drumPos, "drum.x");
+	if( !(_pDrums->Load("PlasDrmB.jpg")) )
 	{
 		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
 
@@ -364,6 +374,14 @@ void Environment::RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFac
 	_pShadowEffect->Effect->BeginPass(0);
 	_pBackWall->_pMesh->DrawSubset(0);
 	_pShadowEffect->Effect->EndPass();
+
+	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pDrums->GetWorldMat(), light->GetViewProjectionMatrix());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pDrums->GetWorldMat());
+	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
+
+	_pShadowEffect->Effect->BeginPass(0);
+	_pDrums->_pMesh->DrawSubset(0);
+	_pShadowEffect->Effect->EndPass();
 }
 
 void Environment::FillCubicShadowMap(Light* light)
@@ -453,6 +471,8 @@ void Environment::RenderSceneWithShadowMap()
 	_pPallets->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pBackWall->Texture);
 	_pBackWall->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
+	_pShadowEffect->Effect->SetTexture(_pShadowEffect->MaterialTexture, _pDrums->Texture);
+	_pDrums->RenderMeshWithShadowCube(_pMainCamera->GetViewProjectionMatrix(), _pShadowEffect);
 	_pShadowEffect->Effect->End();
 
 	_pShadowEffect->Effect->SetTechnique(_pShadowEffect->AmbientHandle);

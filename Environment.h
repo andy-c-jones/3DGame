@@ -31,6 +31,7 @@ class Environment
 	Mesh* _pCargo;
 	Mesh* _pPallets;
 	Mesh* _pBackWall;
+	Mesh* _pDrums;
 
 	D3DXVECTOR3* _translatedLook;
 	D3DXVECTOR3* _translatedPos;
