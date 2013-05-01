@@ -311,13 +311,16 @@ void Environment::RenderDepthToCubeFace(Light* light, IDirect3DSurface9* cubeFac
 	_pGround->_pMesh->DrawSubset(0);
 	_pShadowEffect->Effect->EndPass();
 
-	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pTeapot->GetWorldMat(), light->GetViewProjectionMatrix());
-	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pTeapot->GetWorldMat());
-	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
+	if(_pTeapot->Visible)
+	{
+		D3DXMatrixMultiply(&worldViewProjectionMatrix, _pTeapot->GetWorldMat(), light->GetViewProjectionMatrix());
+		_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pTeapot->GetWorldMat());
+		_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldViewProjMatHandle, &worldViewProjectionMatrix);
 
-	_pShadowEffect->Effect->BeginPass(0);
-	_pTeapot->_pMesh->DrawSubset(0);
-	_pShadowEffect->Effect->EndPass();
+		_pShadowEffect->Effect->BeginPass(0);
+		_pTeapot->_pMesh->DrawSubset(0);
+		_pShadowEffect->Effect->EndPass();
+	}
 
 	D3DXMatrixMultiply(&worldViewProjectionMatrix, _pTeapot2->GetWorldMat(), light->GetViewProjectionMatrix());
 	_pShadowEffect->Effect->SetMatrix(_pShadowEffect->WorldMatrixHandle, _pTeapot2->GetWorldMat());
