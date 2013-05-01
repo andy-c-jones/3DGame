@@ -234,7 +234,7 @@ bool Environment::Initialise( HWND hWnd, HINSTANCE instance, UINT screenWidth, U
 		return false;
 	}
 
-	_pBackWall = new Mesh(_pd3dDevice, backWallPos, "test2.x");
+	_pBackWall = new Mesh(_pd3dDevice, backWallPos, "test.x");
 	if( !(_pBackWall->Load("test.png")) )
 	{
 		MessageBoxA(NULL, "loading Wall mesh.", "BOOM!", MB_OK);
