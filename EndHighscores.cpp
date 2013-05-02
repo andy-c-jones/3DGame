@@ -42,19 +42,19 @@ bool EndHighscores::Intialize(Input* input,HWND hwnd, int width, int height)
 
 	_mainMenu = new MenuImages;
 	_mainMenu->LoadSurface(_direct3dDevice, "MainMenu.jpg");
-	_mainMenu->setPosition(200,200);
+	_mainMenu->setPosition(200,300);
 
 	_mainMenuHigh = new MenuImages;
 	_mainMenuHigh->LoadSurface(_direct3dDevice, "MainMenuHigh.jpg");
-	_mainMenuHigh->setPosition(200,200);
+	_mainMenuHigh->setPosition(200,300);
 
 
 	_exitGame = new MenuImages;
 	_exitGame->LoadSurface(_direct3dDevice, "newgame.jpg");
-	_exitGame->setPosition(300,400);
+	_exitGame->setPosition(200,400);
 	_exitGameHigh = new MenuImages;
 	_exitGameHigh->LoadSurface(_direct3dDevice, "newgameh.jpg");
-	_exitGameHigh->setPosition(300,400);
+	_exitGameHigh->setPosition(200,400);
 
 	return true;
 }
@@ -123,7 +123,7 @@ void EndHighscores::update()
 				_menuItemSelected = 0;
 			}
 		}
-		_count = 70;
+		_count = 10;
 	}
 
 	if (_userInput->IsEnterPressed())

@@ -131,7 +131,7 @@ void Menu::update()
 			{
 				_menuItemSelected = 0;
 			}
-			_count = 100;
+			_count = 10;
 		}
 	}
 
