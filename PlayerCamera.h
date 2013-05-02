@@ -9,7 +9,7 @@ class PlayerCamera : public Camera
 	Input* _pInput;
 	float _moveSpeed;
 	D3DXMATRIXA16 tmpMat;
-
+	void BoundryCheck();
 public:
 
 	PlayerCamera(D3DXVECTOR3* inPosition3, float inFov, float inAspect, float inNearZ, float inFarZ, float inMoveSpeed, Input* inInput) 

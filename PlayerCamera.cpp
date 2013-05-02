@@ -13,21 +13,25 @@ void PlayerCamera::SetMoveSpeed(float inMoveSpeed)
 void PlayerCamera::MoveForwards(float inTimeDelta)
 {
 	this->_position3 += D3DXVECTOR3(this->_look3.x, 0.0f, this->_look3.z) * (_moveSpeed * inTimeDelta);
+	BoundryCheck();
 }
 
 void PlayerCamera::MoveBackwards(float inTimeDelta)
 {
 	this->_position3 -= D3DXVECTOR3(this->_look3.x, 0.0f, this->_look3.z) * (_moveSpeed * inTimeDelta);
+	BoundryCheck();
 }
 
 void PlayerCamera::StrafeRight(float inTimeDelta)
 {
 	this->_position3 += D3DXVECTOR3(this->_right.x, 0.0f, this->_right.z) * (_moveSpeed * inTimeDelta);
+	BoundryCheck();
 }
 
 void PlayerCamera::StrafeLeft(float inTimeDelta)
 {
 	this->_position3 -= D3DXVECTOR3(this->_right.x, 0.0f, this->_right.z) * (_moveSpeed * inTimeDelta);
+	BoundryCheck();
 }
 
 void PlayerCamera::UpdateCamera(float inTimeDelta)
@@ -75,4 +79,24 @@ void PlayerCamera::UpdateCamera(float inTimeDelta)
 	UpdateViewMatrix();
 
 	D3DXMatrixMultiply(&_viewProjectionMatrix , &_viewMatrix, &_projectionMatrix);
+}
+
+void PlayerCamera::BoundryCheck()
+{
+	if(this->_position3.z > -238)
+	{
+		this->_position3.z = -238;
+	}
+	if(this->_position3.z < -272)
+	{
+		this->_position3.z = -272;
+	}
+	if(this->_position3.x < -195)
+	{
+		this->_position3.x = -195;
+	}
+	if(this->_position3.x > 145)
+	{
+		this->_position3.x = 145;
+	}
 }
