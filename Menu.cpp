@@ -10,7 +10,6 @@ Menu::Menu(void)
 	_exitGame = 0;
 	_exitGameHigh = 0;
 	_count = 100;
-	_testSprite = 0;
 }
 
 
@@ -37,11 +36,6 @@ bool Menu::Intialize(Input* input,HWND hwnd, int width, int height)
 	_background = new MenuImages;
 	_background->LoadSurface(direct3dDevice, "BackTest.jpg");
 	
-	_testSprite = new MenuSprites;
-	_testSprite->loadSprite(direct3dDevice,"crosshair.jpg",hwnd);
-	_testSprite->setPosition(300,200);
-	_testSprite->setSize(100,100);
-
 	//load new game image
 	_newGame = new MenuImages;
 	_newGame->LoadSurface(direct3dDevice, "exit.jpg");
@@ -77,28 +71,26 @@ bool Menu::IntializeDirectx(HWND hwnd, int width, int height, bool fullscreen)
 		windowed = false;
 	}
 
-	//Setup the present parameters
 	D3DPRESENT_PARAMETERS d3dpp; 
     ZeroMemory( &d3dpp, sizeof(d3dpp) );
-    d3dpp.Windowed = windowed; //Windowed or Fullscreen
-    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD; //discards the previous frames
-	d3dpp.BackBufferFormat = D3DFMT_R5G6B5; //The display format
-	d3dpp.BackBufferCount  = 1;	//Number of back buffers
-	d3dpp.BackBufferHeight = height; //height of the backbuffer
-	d3dpp.BackBufferWidth  = width; //width of the backbuffer
-	d3dpp.hDeviceWindow    = hwnd; //handle to our window
-	d3dpp.AutoDepthStencilFormat = D3DFMT_D16; //The stencil format
+    d3dpp.Windowed = windowed;
+    d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.BackBufferFormat = D3DFMT_R5G6B5;
+	d3dpp.BackBufferCount  = 1;
+	d3dpp.BackBufferHeight = height;
+	d3dpp.BackBufferWidth  = width;
+	d3dpp.hDeviceWindow    = hwnd;
+	d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
     d3dpp.EnableAutoDepthStencil = TRUE;
 	d3dpp.FullScreen_RefreshRateInHz = D3DPRESENT_RATE_DEFAULT;
 	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
 
 
-	//Create the Video Device
-	hr = direct3d->CreateDevice( D3DADAPTER_DEFAULT, //The default adapter is the primary display adapter
-							D3DDEVTYPE_HAL, //the HAL (hardware accelerated layer) uses your 3d accelerator card
+	hr = direct3d->CreateDevice( D3DADAPTER_DEFAULT,
+							D3DDEVTYPE_HAL,
 							hwnd,
-                            D3DCREATE_HARDWARE_VERTEXPROCESSING, //sets the graphic card to do the hardware vertexprocessing
-                            &d3dpp, //The present parameters we created above
+                            D3DCREATE_HARDWARE_VERTEXPROCESSING,
+                            &d3dpp,
 							&direct3dDevice 
 							);
 	if( FAILED(hr)){
@@ -106,7 +98,7 @@ bool Menu::IntializeDirectx(HWND hwnd, int width, int height, bool fullscreen)
     }
 	direct3dDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	direct3dDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-	direct3dDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE); //this normalizes the normal values (this is important for how lighting effects your models)
+	direct3dDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 
 	return true;
 
@@ -157,7 +149,6 @@ void Menu::render()
 	if( NULL == direct3dDevice )
         return;
 
-    // Clear the backbuffer to a black color
     direct3dDevice->Clear( 0, 
 						NULL, 
 						D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER,
@@ -169,9 +160,7 @@ void Menu::render()
 	direct3dDevice->BeginScene();
 
 	_background->render(direct3dDevice);
-	_testSprite->render(direct3dDevice,200);
 	
-	//render menu items based on which is highlighted
 	if (_menuItemSelected == 0){
 		_newGameHigh->render(direct3dDevice);
 		_exitGame->render(direct3dDevice);
@@ -213,14 +202,12 @@ void Menu::CleanUp()
         direct3d->Release();
 		direct3d = NULL;
 	}
-
 	if( _userInput != NULL )
 	{
 		_userInput->CleanUp();
 		delete _userInput;
 		_userInput = NULL;
 	}
-
 	if (_background != NULL)
 	{
 		delete _background;
@@ -244,5 +231,4 @@ void Menu::CleanUp()
 	{
 		delete _exitGameHigh;
 	}
-
 }

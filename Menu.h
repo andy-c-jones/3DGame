@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Input.h"
 #include "d3dx9.h"
 #include "MenuImages.h"
@@ -29,7 +28,6 @@ private:
 	MenuImages* _newGameHigh;
 	MenuImages* _exitGame;
 	MenuImages* _exitGameHigh;
-	MenuSprites* _testSprite;
 
 	int _menuItemSelected;
 	int _state;
@@ -37,7 +35,7 @@ private:
 
 	bool IntializeDirectx(HWND hwnd, int width, int height, bool fullscreen);
 
-	LPDIRECT3D9             direct3d; //This is the Direct3D object
-	LPDIRECT3DDEVICE9       direct3dDevice; //This is our device object
+	LPDIRECT3D9             direct3d;
+	LPDIRECT3DDEVICE9       direct3dDevice;
 };
 
