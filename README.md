@@ -1,4 +1,4 @@
 3DGame
 ======
 
-A Simple 3D Game
+A simple 3D shooting range game using DirectX.
